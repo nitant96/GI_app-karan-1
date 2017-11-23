@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDarkTheme">#00e5ff</color>
+    <color name="colorAccentDark">#b3e5fc</color>
+    <color name="colorPrimaryDarkThemeDark">#302e42</color>
+    <color name="greyColor">#D3D3D3</color>
+
+    <!--Dark colors-->
+    <color name="gray">#404040</color>
+    <color name="gray_dark">#212121</color>
+    <color name="lighter_gray">#cecece</color>
+    <color name="green">#00695c</color>
+    <color name="purple_dark">#180039</color>
+    <color name="black">#000000</color>
+    <color name="black_1">#2b2b2b</color>
+    <color name="dark_blue">#212D64</color>
+    <color name="gray_darker">#131313</color>
+
+    <!--Custom colors to be used across views and layouts-->
+    <color name="hintColor">#9e9e9e</color>
+    <color name="filler">#2e2e2e</color>
+    <color name="gradient_blue">#0091ea</color>
+    <color name="off_white">#c1c1c1</color>
+    <color name="off_whiter">#e0e0e0</color>
+    <color name="off_whiterer">#9c9c9c</color>
+    <color name="light_gray">#313131</color>
+    <color name="button_gradient_color_1">#0091ea</color>
+    <color name="button_gradient_color_2">#304ffe</color>
+    <color name="purple">#9e12ff</color>
+    <color name="drawer_blue">#35c1fe</color>
+    <color name="white">#eeeeee</color>
+    <color name="background_material">#1f1f1f</color>
+    <color name="gradient_dark_1">#212121</color>
+    <color name="lighter_black">#2e2e2e</color>
+    <color name="red">#b71c1c</color>
+    <color name="light_green">#1de9b6</color>
+</resources>

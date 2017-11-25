@@ -4,26 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_view_home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="gov.cipam.gi.activities.HomePageActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="56sp"
+        android:orientation="vertical">
 
         <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
             android:id="@+id/viewpager"
             android:layout_width="wrap_content"
-            android:layout_height="200sp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true" />
+            android:layout_height="200sp" />
 
         <TextView
             android:id="@+id/states_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/viewpager"
             android:padding="@dimen/padding_small"
             android:text="States"
             android:textSize="18sp"
@@ -33,14 +32,12 @@
             android:id="@+id/recycler_states"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/states_text"
             android:padding="@dimen/padding_smaller" />
 
         <TextView
             android:id="@+id/Categories_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/recycler_states"
             android:padding="@dimen/padding_small"
             android:text="Categories"
             android:textSize="18sp"
@@ -50,7 +47,6 @@
             android:id="@+id/recycler_categories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Categories_text"
             android:padding="@dimen/padding_smaller" />
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

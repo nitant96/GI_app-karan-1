@@ -43,8 +43,9 @@
         <activity
             android:name=".activities.ProductListActivity"
             android:parentActivityName=".activities.HomePageActivity" />
-        <activity android:name=".activities.ProductDetailActivity"
-            android:parentActivityName=".activities.ProductListActivity"/>
+        <activity
+            android:name=".activities.ProductDetailActivity"
+            android:parentActivityName=".activities.ProductListActivity" />
     </application>
 
 </manifest>

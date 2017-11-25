@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import gov.cipam.gi.model.Categories;
 import gov.cipam.gi.utils.ItemClickListener;
 import gov.cipam.gi.R;
 
@@ -12,25 +15,21 @@ import gov.cipam.gi.R;
  * Created by Deepak on 11/18/2017.
  */
 
-public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class CategoryViewHolder extends RecyclerView.ViewHolder{
     public TextView mName;
     public ImageView mDp;
-    private ItemClickListener itemClickListener;
 
     public CategoryViewHolder(View itemView) {
         super(itemView);
 
-        mName =itemView.findViewById(R.id.card_name);
-        mDp =itemView.findViewById(R.id.card_dp);
-
-        itemView.setOnClickListener(this);
+        mName =itemView.findViewById(R.id.card_name_category);
+        mDp =itemView.findViewById(R.id.card_dp_category);
     }
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        itemClickListener.onClick(v,getAdapterPosition(),false);
+    public void bindCategoryDetails(Categories categories){
+        mName.setText(categories.getName());
+        Picasso.with(itemView.getContext())
+                .load(categories.getDpurl())
+                .placeholder(R.drawable.place_holder)
+                .into(mDp);
     }
 }

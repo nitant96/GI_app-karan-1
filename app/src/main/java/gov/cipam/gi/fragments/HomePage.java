@@ -2,6 +2,7 @@ package gov.cipam.gi.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,10 @@ import com.squareup.picasso.Picasso;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import gov.cipam.gi.R;
 import gov.cipam.gi.activities.ProductListActivity;
+import gov.cipam.gi.adapters.CategoryFirebaseAdapter;
+import gov.cipam.gi.adapters.StatesFirebaseAdapter;
+import gov.cipam.gi.utils.RecyclerViewClickListener;
+import gov.cipam.gi.utils.RecyclerViewTouchListener;
 import gov.cipam.gi.viewholder.CategoryViewHolder;
 import gov.cipam.gi.viewholder.StateViewHolder;
 import gov.cipam.gi.adapters.ViewPageAdapter;
@@ -33,86 +38,50 @@ import gov.cipam.gi.utils.ItemClickListener;
  * Created by karan on 11/20/2017.
  */
 
-public class HomePage extends Fragment {
+public class HomePage extends Fragment implements RecyclerViewClickListener {
 
     RecyclerView rvState,rvCategory;
     ScrollView scrollView;
     AutoScrollViewPager autoScrollViewPager;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
-    FirebaseRecyclerAdapter<States,StateViewHolder> adapter;
-    FirebaseRecyclerAdapter<Categories,CategoryViewHolder>adapter2;
+    StatesFirebaseAdapter statesFirebaseAdapter;
+    CategoryFirebaseAdapter categoryFirebaseAdapter;
     FirebaseAuth mAuth;
-    private DatabaseReference mDatabaseState,mDatabaseCategory;
+    DatabaseReference mDatabaseState,mDatabaseCategory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_homepage, container, false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         mDatabaseState = FirebaseDatabase.getInstance().getReference("States");
         mDatabaseCategory = FirebaseDatabase.getInstance().getReference("Categories");
-
-        View view= inflater.inflate(R.layout.fragment_homepage, container, false);
+        statesFirebaseAdapter=new StatesFirebaseAdapter(getContext(),States.class,R.layout.card_view_state_item,StateViewHolder.class,mDatabaseState);
+        categoryFirebaseAdapter=new CategoryFirebaseAdapter(getContext(),Categories.class,R.layout.card_view_category_item,CategoryViewHolder.class,mDatabaseCategory);
         rvState =  view.findViewById(R.id.recycler_states);
         rvCategory =  view.findViewById(R.id.recycler_categories);
         autoScrollViewPager = view.findViewById(R.id.viewpager);
         scrollView=view.findViewById(R.id.scroll_view_home);
 
         scrollView.setSmoothScrollingEnabled(true);
-        layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,true);
-        layoutManager2 = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,true);
+        layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        layoutManager2 = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvState.setLayoutManager(layoutManager);
+        rvState.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvState,this));
+        rvState.setAdapter(statesFirebaseAdapter);
         rvCategory.setLayoutManager(layoutManager2);
-
-        LoadStates();
-        LoadCategories();
+        //rvCategory.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvCategory,this));
+        rvCategory.setAdapter(categoryFirebaseAdapter);
         setAutoScroll();
-        return view;
-    }
-
-    private void LoadStates() {
-        adapter = new FirebaseRecyclerAdapter<States, StateViewHolder>(States.class,R.layout.card_view_state_item,StateViewHolder.class,mDatabaseState) {
-            @Override
-            protected void populateViewHolder(StateViewHolder viewHolder, final States model, int position) {
-                viewHolder.mName.setText(model.getName());
-                final Uri uri =Uri.parse(model.getDpurl());
-                Picasso.with(getContext())
-                        .load(uri)
-                        .placeholder(R.drawable.place_holder)
-                        .into(viewHolder.mDp);
-                final States clickitem = model;
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(getContext(),model.getName(),Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getContext(), ProductListActivity.class));
-                    }
-                });
-
-            }
-        };
-        rvState.setAdapter(adapter);
-
-    }
-
-    private void LoadCategories() {
-        adapter2 = new FirebaseRecyclerAdapter<Categories,CategoryViewHolder>(Categories.class,R.layout.card_view_category_item,CategoryViewHolder.class,mDatabaseCategory) {
-            @Override
-            protected void populateViewHolder(CategoryViewHolder viewHolder, final Categories model, int position) {
-                viewHolder.mName.setText(model.getName());
-                final Uri uri =Uri.parse(model.getDpurl());
-                Picasso.with(getContext())
-                        .load(uri)
-                        .placeholder(R.drawable.place_holder)
-                        .into(viewHolder.mDp);
-
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(getContext(),model.getName(),Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        };
-        rvCategory.setAdapter(adapter2);
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void setAutoScroll() {
@@ -124,6 +93,11 @@ public class HomePage extends Fragment {
         autoScrollViewPager.setScrollDurationFactor(5);
         autoScrollViewPager.setStopScrollWhenTouch(true);
         autoScrollViewPager.setInterval(3000);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -139,5 +113,16 @@ public class HomePage extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        startActivity(new Intent(getContext(), ProductListActivity.class));
+
+    }
+
+    @Override
+    public void onLongClick(View view, int position) {
+
     }
 }

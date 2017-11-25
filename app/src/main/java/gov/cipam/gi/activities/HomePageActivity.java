@@ -88,6 +88,8 @@ public class HomePageActivity extends BaseActivity
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.isSubmitButtonEnabled();
+        searchView.animate();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
         return true;
@@ -115,9 +117,11 @@ public class HomePageActivity extends BaseActivity
             });
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-
                 }
             }).show();
+        }
+        else if (id==R.id.action_search){
+            searchView.onActionViewExpanded();
         }
         return super.onOptionsItemSelected(item);
     }

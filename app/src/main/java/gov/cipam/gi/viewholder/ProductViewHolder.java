@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import gov.cipam.gi.R;
+import gov.cipam.gi.model.Product;
 
 /**
  * Created by karan on 11/22/2017.
@@ -26,14 +27,14 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         mState=itemView.findViewById(R.id.card_view_state);
         imageView=itemView.findViewById(R.id.card_view_image);
     }
-
-    public void setTitle(String title){
-        mTitle.setText(title);
-    }
-    public void setFiller(String filler){
-        mFiller.setText(filler);
-    }
-    public void setState(String state){
-        mState.setText(state);
+    public void bindProductDetails(Product product) {
+        mTitle.setText(product.getName());
+        mFiller.setText(product.getDetail());
+        mState.setText(product.getCategory());
+        Picasso.with(itemView.getContext())
+                .load(product.getDpurl())
+                .fit()
+                .placeholder(R.drawable.place_holder)
+                .into(imageView);
     }
 }

@@ -74,4 +74,7 @@
     <string name="desc">ImageView</string>
     <string name="save_for_later">Save for Later?</string>
     <string name="url">Open in Web?</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

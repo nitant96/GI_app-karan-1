@@ -5,34 +5,33 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import gov.cipam.gi.utils.ItemClickListener;
+import com.squareup.picasso.Picasso;
+
+import gov.cipam.gi.model.States;
 import gov.cipam.gi.R;
 
 /**
  * Created by Deepak on 11/18/2017.
  */
 
-public class StateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class StateViewHolder extends RecyclerView.ViewHolder{
     public TextView mName;
     public ImageView mDp;
 
-    private ItemClickListener itemClickListener;
 
 
     public StateViewHolder(View itemView) {
         super(itemView);
 
-        mName =itemView.findViewById(R.id.card_name);
-        mDp =itemView.findViewById(R.id.card_dp);
-        itemView.setOnClickListener(this);
-    }
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
+        mName =itemView.findViewById(R.id.card_name_state);
+        mDp =itemView.findViewById(R.id.card_dp_state);
     }
 
-    @Override
-    public void onClick(View v) {
-        itemClickListener.onClick(v,getAdapterPosition(),false);
-
+    public void bindStateDetails(States states){
+        mName.setText(states.getName());
+        Picasso.with(itemView.getContext())
+                .load(states.getDpurl())
+                .placeholder(R.drawable.place_holder)
+                .into(mDp);
     }
 }

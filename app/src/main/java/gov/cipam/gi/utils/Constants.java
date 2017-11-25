@@ -14,4 +14,6 @@ public class Constants {
     public static final String KEY_USERS="Users";
     public static final String KEY_USER_INFO = "userinfo";
     public static final String KEY_USER_DATA ="userdata" ;
+    public static final String INDEX = "index";
+    public static final String ROOT_NODE ="root";
 }

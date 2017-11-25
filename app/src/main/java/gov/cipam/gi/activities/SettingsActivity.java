@@ -2,7 +2,6 @@ package gov.cipam.gi.activities;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import gov.cipam.gi.R;

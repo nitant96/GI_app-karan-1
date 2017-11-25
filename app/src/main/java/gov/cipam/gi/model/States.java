@@ -4,7 +4,7 @@ package gov.cipam.gi.model;
  * Created by Deepak on 11/18/2017.
  */
 
-public class States {
+public class States  {
     private String name,dpurl;
 
     public States(){

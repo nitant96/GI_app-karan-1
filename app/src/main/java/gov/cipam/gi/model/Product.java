@@ -4,11 +4,11 @@ package gov.cipam.gi.model;
  * Created by Deepak on 11/18/2017.
  */
 
-public class GI {
+public class Product {
 
     private String name,dpurl,detail,category,state;
 
-    public GI(){
+    public Product(){
 
     }
 

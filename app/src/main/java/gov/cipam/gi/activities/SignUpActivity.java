@@ -2,37 +2,29 @@ package gov.cipam.gi.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import gov.cipam.gi.R;
-import gov.cipam.gi.common.SharedPref;
 import gov.cipam.gi.firebasemanager.FirebaseAuthentication;
-import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
 
-public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText mEmailField,mPassField,mNameField;
-    private Button mSignupButton;
+    private TextView mLoginTextView;
+    Button mSignupButton;
     ProgressDialog mProgressDialog;
-    private FirebaseAuth mAuth;
-    private static String email,password,name;
+    FirebaseAuth mAuth;
+    private String email,password,name;
     private static String TAG="Create Account";
     private DatabaseReference mUsersDatabase,mUserExists;
     private ProgressDialog mProgress;
@@ -40,20 +32,23 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_USERS);
 
-        mEmailField =findViewById(R.id.emailField);
-        mPassField =findViewById(R.id.passField);
+        mEmailField =findViewById(R.id.signUpEmailField);
+        mPassField =findViewById(R.id.signUpPassField);
         mNameField =findViewById(R.id.nameField);
 
-        mSignupButton =findViewById(R.id.signupButton);
+        mLoginTextView=findViewById(R.id.sign_in_text);
+
+        mSignupButton =findViewById(R.id.sign_up_button);
 
         mProgressDialog = new ProgressDialog(this);
 
         mSignupButton.setOnClickListener(this);
+        mLoginTextView.setOnClickListener(this);
     }
 
     private void signUp(){
@@ -87,8 +82,13 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
          int id=view.getId();
 
          switch (id){
-             case R.id.signupButton:
+             case R.id.sign_up_button:
                  signUp();
+                 break;
+             case R.id.sign_in_text:
+                 startActivity(new Intent(this,SignInActivity.class));
+                 finish();
+                 break;
          }
     }
 }

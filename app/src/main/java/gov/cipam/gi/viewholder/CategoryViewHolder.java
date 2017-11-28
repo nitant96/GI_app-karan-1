@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import gov.cipam.gi.model.Categories;
-import gov.cipam.gi.utils.ItemClickListener;
 import gov.cipam.gi.R;
 
 /**

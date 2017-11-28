@@ -12,13 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import gov.cipam.gi.R;
@@ -32,7 +29,6 @@ import gov.cipam.gi.viewholder.StateViewHolder;
 import gov.cipam.gi.adapters.ViewPageAdapter;
 import gov.cipam.gi.model.Categories;
 import gov.cipam.gi.model.States;
-import gov.cipam.gi.utils.ItemClickListener;
 
 /**
  * Created by karan on 11/20/2017.
@@ -115,14 +111,15 @@ public class HomePage extends Fragment implements RecyclerViewClickListener {
         super.onDestroyView();
     }
 
+
     @Override
     public void onClick(View view, int position) {
         startActivity(new Intent(getContext(), ProductListActivity.class));
-
     }
 
     @Override
     public void onLongClick(View view, int position) {
 
     }
+
 }

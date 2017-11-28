@@ -77,4 +77,27 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="open_in_map">Open location in map?</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="email_hint">user123@xyz.com</string>
+    <string name="password_hint">Input Password</string>
+    <string name="login_page">Back to login</string>
+    <string name="username_hint">Username</string>
+    <string name="todo">TODO</string>
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="new_user">New User? Sign Up.</string>
+    <string name="logging_in">Logging in user</string>
 </resources>

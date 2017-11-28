@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,9 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import gov.cipam.gi.R;
-import gov.cipam.gi.activities.CreateAccountActivity;
 import gov.cipam.gi.activities.HomePageActivity;
-import gov.cipam.gi.activities.SignInActivity;
 import gov.cipam.gi.common.SharedPref;
 import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,19 +16,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import gov.cipam.gi.R;
-import gov.cipam.gi.common.SharedPref;
 import gov.cipam.gi.firebasemanager.FirebaseAuthentication;
-import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
@@ -50,12 +41,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         mAuth = FirebaseAuth.getInstance();
         mPrefs = getPreferences(MODE_PRIVATE);
 
-        mCreateAccount =  findViewById(R.id.createAccText);
+        mCreateAccount =  findViewById(R.id.signupText);
         mForgotPass =  findViewById(R.id.forgotPass);
 
-        mEmailField =  findViewById(R.id.emailField);
-        mPassField =  findViewById(R.id.passField);
-        mSignInButton =  findViewById(R.id.signinButton);
+        mEmailField =  findViewById(R.id.signInEmailField);
+        mPassField =  findViewById(R.id.signInPassField);
+        mSignInButton =  findViewById(R.id.sign_in_button);
 
         mProgressDialog = new ProgressDialog(this);
 
@@ -67,7 +58,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void forgotPassword() {
         email = mEmailField.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
-            mEmailField.setError(getString(R.string.empty_email_error));
+            mEmailField.setError(getString(R.string.email_error));
             Toast.makeText(SignInActivity.this, getString(R.string.toast_empty_email),
                     Toast.LENGTH_SHORT).show();
         } else {
@@ -111,7 +102,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void startSignIn(){
 
         mProgressDialog.setTitle(getString(R.string.register_progress_dialog_title));
-        mProgressDialog.setMessage(getString(R.string.register_progress_dialog_message));
+        mProgressDialog.setMessage(getString(R.string.logging_in));
         mProgressDialog.setCanceledOnTouchOutside(false);
 
         email = mEmailField.getText().toString().trim();
@@ -125,6 +116,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
 
         } else {
+            mProgressDialog.show();
+
             FirebaseAuthentication firebaseAuthentication=new FirebaseAuthentication(this);
             firebaseAuthentication.startSignIn(email,password,mProgressDialog);
         }
@@ -136,7 +129,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         int id=view.getId();
 
         switch (id){
-            case R.id.signinButton:
+            case R.id.sign_in_button:
                startSignIn();
                 break;
 
@@ -144,8 +137,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 forgotPassword();
                 break;
 
-            case R.id.createAccText:
-                startActivity(new Intent(SignInActivity.this, CreateAccountActivity.class));
+            case R.id.signupText:
+                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                 break;
         }
     }

@@ -9,4 +9,8 @@
         android:id="@+id/action_url"
         app:showAsAction="ifRoom"
         android:icon="@drawable/information"/>
+    <item android:id="@+id/action_location"
+        android:title="@string/open_in_map"
+        android:icon="@drawable/map_marker"
+        app:showAsAction="ifRoom"/>
 </menu>

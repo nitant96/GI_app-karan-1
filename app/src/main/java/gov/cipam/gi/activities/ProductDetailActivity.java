@@ -21,11 +21,16 @@ public class ProductDetailActivity extends BaseActivity {
     RecyclerView sellerRecyclerView;
     SellerFirebaseAdapter sellerFirebaseAdapter;
     DatabaseReference mDatabaseReference;
+    Seller seller;
+    double lat,lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+        seller=new Seller();
+        lat=seller.getlat();
+        lon=seller.getlon();
         mDatabaseReference= FirebaseDatabase.getInstance().getReference().child("Giproducts").child("agrPalakkadanMattaRice").child("seller");
         sellerRecyclerView= findViewById(R.id.seller_recycler_view);
         sellerFirebaseAdapter= new SellerFirebaseAdapter(this,Seller.class,R.layout.card_view_seller_item, SellerViewHolder.class,mDatabaseReference);
@@ -58,6 +63,9 @@ public class ProductDetailActivity extends BaseActivity {
                 break;
             case R.id.action_url:
                 Toast.makeText(this,R.string.url,Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_location:
+                Toast.makeText(this,R.string.open_in_map,Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

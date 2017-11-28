@@ -10,7 +10,9 @@
         android:id="@+id/account_info_toolbar"
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/nameText"
@@ -36,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameText"
-        android:layout_marginBottom="12dp"
+        android:layout_toEndOf="@+id/nameText"
         android:enabled="false"
         android:padding="@dimen/padding_smaller"
         android:textAllCaps="true"

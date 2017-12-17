@@ -1,43 +1,56 @@
 package gov.cipam.gi.activities;
 
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import gov.cipam.gi.R;
-import gov.cipam.gi.adapters.SellerFirebaseAdapter;
-import gov.cipam.gi.model.Seller;
-import gov.cipam.gi.viewholder.SellerViewHolder;
+import gov.cipam.gi.fragments.ProductDetailFragment;
+import gov.cipam.gi.utils.Constants;
 
 public class ProductDetailActivity extends BaseActivity {
-
-    RecyclerView sellerRecyclerView;
-    SellerFirebaseAdapter sellerFirebaseAdapter;
-    DatabaseReference mDatabaseReference;
-    Seller seller;
-    double lat,lon;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    ProductDetailFragment productDetailFragment;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
-        seller=new Seller();
-        lat=seller.getlat();
-        lon=seller.getlon();
-        mDatabaseReference= FirebaseDatabase.getInstance().getReference().child("Giproducts").child("agrPalakkadanMattaRice").child("seller");
-        sellerRecyclerView= findViewById(R.id.seller_recycler_view);
-        sellerFirebaseAdapter= new SellerFirebaseAdapter(this,Seller.class,R.layout.card_view_seller_item, SellerViewHolder.class,mDatabaseReference);
-        sellerRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        sellerRecyclerView.setAdapter(sellerFirebaseAdapter);
-
         setUpToolbar(this);
+
+        collapsingToolbarLayout=findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitleEnabled(false);
+        mToolbar.setBackgroundColor(Color.TRANSPARENT);
+        mToolbar.setSubtitle(R.string.home);
+
+
+        imageView=findViewById(R.id.details_image);
+        loadImage(imageView);
+        productDetailFragment=new ProductDetailFragment();
+        if(savedInstanceState==null){
+            fragmentInflate(productDetailFragment);
+        }
+    }
+
+    @Override
+    public void onAttachFragment(android.app.Fragment fragment) {
+        super.onAttachFragment(fragment);
+
     }
 
     @Override
@@ -50,6 +63,37 @@ public class ProductDetailActivity extends BaseActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_details_page, menu);
         return true;
+    }
+
+    private void loadImage(final ImageView imageView) {
+        this.imageView=imageView;
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean image_download = sharedPreferences.getBoolean(Constants.KEY_DOWNLOAD_IMAGES, true);
+
+        if(image_download){
+            Picasso.with(this)
+                    .load("http://i.imgur.com/DvpvklR.png")
+                    .placeholder(R.drawable.place_holder)
+                    .fit()
+                    .into(imageView);
+            //imageView.setImageResource(R.drawable.image_gradient);
+        }
+        else
+        {
+            imageView.setImageResource(R.drawable.image_off);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void fragmentInflate(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.product_detail_frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package gov.cipam.gi.viewholder;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +29,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder{
         mName.setText(categories.getName());
         Picasso.with(itemView.getContext())
                 .load(categories.getDpurl())
-                .placeholder(R.drawable.place_holder)
+                .placeholder(R.drawable.image)
                 .into(mDp);
     }
 }

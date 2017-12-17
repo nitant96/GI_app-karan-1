@@ -2,36 +2,29 @@ package gov.cipam.gi.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import gov.cipam.gi.R;
-import gov.cipam.gi.adapters.ProductFirebaseAdapter;
-import gov.cipam.gi.model.Product;
-import gov.cipam.gi.utils.RecyclerViewClickListener;
-import gov.cipam.gi.utils.RecyclerViewTouchListener;
-import gov.cipam.gi.viewholder.ProductViewHolder;
+import gov.cipam.gi.fragments.ProductListFragment;
 
-public class ProductListActivity extends BaseActivity implements RecyclerViewClickListener {
-    RecyclerView productListRecycler;
-    DatabaseReference mDatabaseProduct;
-    ProductFirebaseAdapter productFirebaseAdapter;
+public class ProductListActivity extends BaseActivity{
+
+    ProductListFragment productListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
         setUpToolbar(this);
-        mDatabaseProduct = FirebaseDatabase.getInstance().getReference("Giproducts");
-        productListRecycler=findViewById(R.id.product_list_recycler_view);
-        productFirebaseAdapter=new ProductFirebaseAdapter(this,Product.class,R.layout.card_view_product_list,ProductViewHolder.class,mDatabaseProduct);
+        productListFragment=new ProductListFragment();
 
-        productListRecycler.setAdapter(productFirebaseAdapter);
-        productListRecycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        productListRecycler.addOnItemTouchListener(new RecyclerViewTouchListener(this,productListRecycler,this));
+        if(savedInstanceState==null){
+            fragmentInflate(productListFragment);
+        }
 
     }
 
@@ -41,13 +34,27 @@ public class ProductListActivity extends BaseActivity implements RecyclerViewCli
     }
 
     @Override
-    public void onClick(View view, int position) {
-        Intent intent=new Intent(this,ProductDetailActivity.class);
-        startActivity(intent);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_product_list, menu);
+        return true;
     }
 
     @Override
-    public void onLongClick(View view, int position) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        int id=item.getItemId();
+
+        switch (id){
+            case R.id.action_settings_product_list:
+                startActivity(new Intent(this,SettingsActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void fragmentInflate(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.product_list_frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }

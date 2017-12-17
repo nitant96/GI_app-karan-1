@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:padding="5sp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_small"
+    android:paddingBottom="@dimen/padding_small">
+
     <ImageView
+        android:id="@+id/ImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ImageView"/>
+        android:scaleType="center"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>

@@ -17,16 +17,15 @@ import gov.cipam.gi.utils.Constants;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    String theme;
+    String textSize;
+    boolean downloadImages;
     Toolbar mToolbar;
     SharedPreferences sharedPreferences;
     SharedPreferences.OnSharedPreferenceChangeListener prefListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        setUpTheme();
-        //setUpFont();
+        setUpFont();
 
         super.onCreate(savedInstanceState);
 
@@ -57,51 +56,36 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        if (theme.equals(getString(R.string.theme_light))) {
-            mToolbar.setBackgroundColor(ContextCompat.getColor(activity,R.color.colorPrimaryDark));
-            mToolbar.setPopupTheme(R.style.AppTheme);
-            activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity,R.color.colorPrimaryDark));
-            }
-        else if (theme.equals(getString(R.string.theme_dark))) {
-            mToolbar.setBackgroundColor(ContextCompat.getColor(activity,R.color.colorPrimaryDarkThemeDark));
-            mToolbar.setPopupTheme(R.style.AppDarkTheme);
-            activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity,R.color.colorPrimaryDarkThemeDark));
-            }
         }
     }
 
-    protected void setUpTheme() {
+    protected void setUpFont() {
 
+        // fetches shared preferences for text size selected by user
         loadPreferences();
 
-        if (theme.equals(getString(R.string.theme_light))) {
-
-            setTheme(R.style.AppTheme);
-        } else if (theme.equals(getString(R.string.theme_dark))) {
-
-            setTheme(R.style.AppDarkTheme);
+        // set font size from app styles
+        if (textSize.equals(getString(R.string.text_size_small))) {
+            setTheme(R.style.TextSizeSmall);
+        }
+        else if (textSize.equals(getString(R.string.text_size_medium))) {
+            setTheme(R.style.TextSizeMedium);
+        }
+        else if (textSize.equals(getString(R.string.text_size_large))) {
+            setTheme(R.style.TextSizeLarge);
         }
     }
-
     protected void loadPreferences() {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        theme = sharedPreferences.getString(Constants.KEY_APP_THEME, getString(R.string.theme_light));
-
-        //downloadImages  = sharedPreferences.getBoolean(Constants.KEY_DOWNLOAD_IMAGES, true);
+        textSize = sharedPreferences.getString(Constants.KEY_TEXT_SIZE, getString(R.string.text_size_small));
+        downloadImages  = sharedPreferences.getBoolean(Constants.KEY_DOWNLOAD_IMAGES, true);
     }
 
     protected void sharedPreferencesListener() {
 
         prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-                if (key.equals(Constants.KEY_APP_THEME)) {
-
-                    recreate();
-                }
             }
         };
     }

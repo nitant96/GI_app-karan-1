@@ -5,10 +5,12 @@
     android:id="@+id/action_save_for_later"
     android:title="@string/save_for_later"
     app:showAsAction="always"/>
-    <item android:title="@string/url"
+    <item
         android:id="@+id/action_url"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/information"/>
+        android:icon="@drawable/information"
+        android:title="@string/url"
+        app:showAsAction="ifRoom"/>
+
     <item android:id="@+id/action_location"
         android:title="@string/open_in_map"
         android:icon="@drawable/map_marker"

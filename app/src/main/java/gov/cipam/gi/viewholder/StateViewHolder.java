@@ -15,8 +15,8 @@ import gov.cipam.gi.R;
  */
 
 public class StateViewHolder extends RecyclerView.ViewHolder{
-    public TextView mName;
-    public ImageView mDp;
+    private TextView mName;
+    private ImageView mDp;
 
 
 
@@ -31,7 +31,7 @@ public class StateViewHolder extends RecyclerView.ViewHolder{
         mName.setText(states.getName());
         Picasso.with(itemView.getContext())
                 .load(states.getDpurl())
-                .placeholder(R.drawable.place_holder)
+                .placeholder(R.drawable.image)
                 .into(mDp);
     }
 }

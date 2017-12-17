@@ -28,7 +28,7 @@ public class Onboarding1 extends Fragment implements ISlideBackgroundColorHolder
 
     @Override
     public int getDefaultBackgroundColor() {
-        return ContextCompat.getColor(getContext(),R.color.colorPrimaryDarkThemeDark);
+        return ContextCompat.getColor(getContext(),R.color.md_blue_700);
     }
 
     @Override

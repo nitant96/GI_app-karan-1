@@ -10,6 +10,5 @@
     <!-- App theme array -->
     <string-array name="theme">
         <item>Light</item>
-        <item>Dark</item>
     </string-array>
 </resources>

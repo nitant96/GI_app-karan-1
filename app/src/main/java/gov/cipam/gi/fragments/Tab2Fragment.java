@@ -12,7 +12,7 @@ import gov.cipam.gi.R;
  * Created by karan on 11/20/2017.
  */
 
-public class Tab2 extends Fragment {
+public class Tab2Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

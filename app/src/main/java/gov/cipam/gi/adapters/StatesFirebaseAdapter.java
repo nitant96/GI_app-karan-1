@@ -14,7 +14,6 @@ import com.google.firebase.database.Query;
 import gov.cipam.gi.model.States;
 import gov.cipam.gi.viewholder.StateViewHolder;
 
-
 public class StatesFirebaseAdapter extends FirebaseRecyclerAdapter<States, StateViewHolder> {
     private DatabaseReference mRef;
     private Context mContext;
@@ -34,13 +33,11 @@ public class StatesFirebaseAdapter extends FirebaseRecyclerAdapter<States, State
         viewHolder.bindStateDetails(model);
     }
 
-
    /* @Override
     public void cleanup() {
         super.cleanup();
         mRef.removeEventListener(mChildEventListener);
     }*/
-
     @Override
     public void onCancelled(DatabaseError error) {
         super.onCancelled(error);

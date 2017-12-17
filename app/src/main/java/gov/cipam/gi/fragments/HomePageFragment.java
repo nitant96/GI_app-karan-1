@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -34,10 +33,10 @@ import gov.cipam.gi.model.States;
  * Created by karan on 11/20/2017.
  */
 
-public class HomePage extends Fragment implements RecyclerViewClickListener {
+public class HomePageFragment extends Fragment implements RecyclerViewClickListener {
 
     RecyclerView rvState,rvCategory;
-    ScrollView scrollView;
+    NestedScrollView scrollView;
     AutoScrollViewPager autoScrollViewPager;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
     StatesFirebaseAdapter statesFirebaseAdapter;
@@ -53,20 +52,22 @@ public class HomePage extends Fragment implements RecyclerViewClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         mDatabaseState = FirebaseDatabase.getInstance().getReference("States");
         mDatabaseCategory = FirebaseDatabase.getInstance().getReference("Categories");
         statesFirebaseAdapter=new StatesFirebaseAdapter(getContext(),States.class,R.layout.card_view_state_item,StateViewHolder.class,mDatabaseState);
         categoryFirebaseAdapter=new CategoryFirebaseAdapter(getContext(),Categories.class,R.layout.card_view_category_item,CategoryViewHolder.class,mDatabaseCategory);
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         rvState =  view.findViewById(R.id.recycler_states);
         rvCategory =  view.findViewById(R.id.recycler_categories);
         autoScrollViewPager = view.findViewById(R.id.viewpager);
         scrollView=view.findViewById(R.id.scroll_view_home);
-
         scrollView.setSmoothScrollingEnabled(true);
         layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         layoutManager2 = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);

@@ -50,12 +50,7 @@ public class IntroActivity extends AppIntro {
                 .putBoolean(Constants.ONBOARDING_COMPLETE,true).apply();
 
         Users user = SharedPref.getSavedObjectFromPreference(this,Constants.KEY_USER_INFO,Constants.KEY_USER_DATA,Users.class);
-        if(user!=null) {
-            startActivity(new Intent(this, HomePageActivity.class));
-        }
-        else {
-            startActivity(new Intent(this, SignInActivity.class));
-        }
+        startActivity(new Intent(this, SignInActivity.class));
         finish();
     }
 

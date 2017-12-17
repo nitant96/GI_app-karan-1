@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Nothing much here"
+        android:text="Welcome!"
         android:textColor="@android:color/background_light"
         android:textSize="48sp" />
 
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="This is a just a test app."
+        android:text="GI India."
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
 

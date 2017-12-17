@@ -12,10 +12,16 @@ public class Constants {
     public static final String KEY_CHILD_NAME = "name";
     public static final String KEY_CHILD_USERS = "email";
     public static final String KEY_USERS="Users";
-    public static final String POSITION = "position";
-    public static final String KEY_PRODUCT_DETAILS = "product_details";
     public static final String KEY_USER_INFO = "userinfo";
     public static final String KEY_USER_DATA ="userdata" ;
     public static final String INDEX = "index";
     public static final String ROOT_NODE ="root";
+
+    public static final String CATEGORY = "Category";
+    public static final String STATE = "State";
+    public static final String CLICKED_LIST_TYPE="clickedListType";
+    public static final String THE_ITEM_CLICKED="theItemClicked";
+
+    public static final String KEY_TEXT_SIZE ="text_size" ;
+    public static final String KEY_DOWNLOAD_IMAGES ="image_download" ;
 }

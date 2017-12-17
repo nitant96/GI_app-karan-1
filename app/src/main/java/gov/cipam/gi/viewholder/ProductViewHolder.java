@@ -1,5 +1,6 @@
 package gov.cipam.gi.viewholder;
 
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,25 +17,28 @@ import gov.cipam.gi.model.Product;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView mTitle,mFiller,mState;
-    public ImageView imageView;
+    private TextView mTitle,mFiller,mCategory,mState;
+    private ImageView imageView;
 
     public ProductViewHolder(View itemView) {
         super(itemView);
-
         mTitle=itemView.findViewById(R.id.card_view_title);
         mFiller=itemView.findViewById(R.id.card_view_filler);
-        mState=itemView.findViewById(R.id.card_view_state);
+        mCategory=itemView.findViewById(R.id.card_view_category);
+        mState=itemView.findViewById(R.id.card_view_state1);
         imageView=itemView.findViewById(R.id.card_view_image);
     }
     public void bindProductDetails(Product product) {
         mTitle.setText(product.getName());
         mFiller.setText(product.getDetail());
-        mState.setText(product.getCategory());
+        mCategory.setText(product.getCategory());
+        mState.setText(product.getState());
+
         Picasso.with(itemView.getContext())
                 .load(product.getDpurl())
                 .fit()
-                .placeholder(R.drawable.place_holder)
+                .placeholder(R.drawable.image)
                 .into(imageView);
     }
+
 }

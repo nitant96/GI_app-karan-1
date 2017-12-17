@@ -4,7 +4,7 @@
     tools:showIn="navigation_view">
 
         <item
-            android:checkable="true"
+            android:checkable="false"
             android:id="@+id/nav_about_us"
             android:icon="@drawable/information_variant"
             android:title="@string/about_us" />

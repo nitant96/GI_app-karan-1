@@ -22,24 +22,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import gov.cipam.gi.R;
 import gov.cipam.gi.common.SharedPref;
-import gov.cipam.gi.fragments.HomePage;
-import gov.cipam.gi.fragments.Tab2;
+import gov.cipam.gi.fragments.HomePageFragment;
+import gov.cipam.gi.fragments.Tab2Fragment;
 import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
 
 public class HomePageActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener,TabLayout.OnTabSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        TabLayout.OnTabSelectedListener{
 
     private FirebaseAuth mAuth;
     Users user;
     TextView nav_user,nav_email;
-    HomePage homePage;
+    HomePageFragment homePageFragment;
     SearchView searchView;
-    Tab2 tab2;
+    Tab2Fragment tab2Fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,14 @@ public class HomePageActivity extends BaseActivity
         setContentView(R.layout.activity_home_page);
 
         setUpToolbar(this);
+        homePageFragment =new HomePageFragment();
+        tab2Fragment =new Tab2Fragment();
+
+        if(savedInstanceState==null){
+            fragmentInflate(homePageFragment);
+        }
+
         mAuth = FirebaseAuth.getInstance();
-        homePage =new HomePage();
-        tab2=new Tab2();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -57,7 +62,6 @@ public class HomePageActivity extends BaseActivity
         toggle.syncState();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setSelectedItemId(0);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -74,10 +78,7 @@ public class HomePageActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else {
-            super.onBackPressed();
-            finish();
-        }
+        super.onBackPressed();
     }
 
     @Override
@@ -101,27 +102,29 @@ public class HomePageActivity extends BaseActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch (id){
+            case R.id.action_settings:
+                startActivity(new Intent(this,SettingsActivity.class));
+                break;
+            case R.id.action_logout:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(R.string.logout);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this,SettingsActivity.class));
-        }
-        else if(id==R.id.action_logout){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(R.string.logout);
-
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    mAuth.signOut();
-                    startActivity(new Intent(HomePageActivity.this, SignInActivity.class));
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                }
-            }).show();
-        }
-        else if (id==R.id.action_search){
-            searchView.onActionViewExpanded();
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mAuth.signOut();
+                        startActivity(new Intent(HomePageActivity.this, SignInActivity.class));
+                        finish();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                }).show();
+                break;
+            case R.id.action_search:
+                break;
+            case R.id.action_open_settings:
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -133,10 +136,10 @@ public class HomePageActivity extends BaseActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fragmentInflate(homePage);
+                    fragmentInflate(homePageFragment);
                     return true;
                 case R.id.navigation_dashboard:
-                    fragmentInflate(tab2);
+                    fragmentInflate(tab2Fragment);
                     return true;
             }
             return false;
@@ -160,7 +163,6 @@ public class HomePageActivity extends BaseActivity
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND).putExtra(Intent.EXTRA_TEXT,"google.com").setType("text/plain");
             startActivity(Intent.createChooser(intent,"Choose an app"));
-
         }
 
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
@@ -168,14 +170,14 @@ public class HomePageActivity extends BaseActivity
         return true;
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser ==null){
             startActivity(new Intent(this,SignInActivity.class));
         }
         super.onStart();
-    }
+    }*/
 
     private void setUserName() {
         if(user!=null) {
@@ -193,6 +195,7 @@ public class HomePageActivity extends BaseActivity
         fragmentTransaction.replace(R.id.home_page_frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
     @Override
     protected int getToolbarID() {
         return R.id.toolbar;

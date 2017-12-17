@@ -71,7 +71,7 @@ public class FirebaseAuthentication {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(mContext, mContext.getString(R.string.toast_signup_failure),
                                     Toast.LENGTH_SHORT).show();
-
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -115,7 +115,7 @@ public class FirebaseAuthentication {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(mContext, mContext.getString(R.string.toast_signin_failure),
                                     Toast.LENGTH_SHORT).show();
-
+                            progressDialog.dismiss();
                         }
 
                     }

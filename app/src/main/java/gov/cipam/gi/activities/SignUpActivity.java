@@ -2,6 +2,7 @@ package gov.cipam.gi.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import gov.cipam.gi.R;
 import gov.cipam.gi.firebasemanager.FirebaseAuthentication;
 import gov.cipam.gi.utils.Constants;
@@ -24,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     Button mSignupButton;
     ProgressDialog mProgressDialog;
     FirebaseAuth mAuth;
+    CircleImageView imageView;
     private String email,password,name;
     private static String TAG="Create Account";
     private DatabaseReference mUsersDatabase,mUserExists;
@@ -45,7 +48,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         mSignupButton =findViewById(R.id.sign_up_button);
 
+        imageView=findViewById(R.id.ImageViewSignUp);
         mProgressDialog = new ProgressDialog(this);
+
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        imageView.setImageResource(R.drawable.image1);
 
         mSignupButton.setOnClickListener(this);
         mLoginTextView.setOnClickListener(this);
@@ -53,8 +61,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void signUp(){
 
-        mProgressDialog.setTitle(getString(R.string.register_progress_dialog_title));
-        mProgressDialog.setMessage(getString(R.string.register_progress_dialog_message));
+        mProgressDialog.setTitle(R.string.register_progress_dialog_title);
+        mProgressDialog.setMessage(String.valueOf(R.string.register_progress_dialog_message));
         mProgressDialog.setCanceledOnTouchOutside(false);
 
         email = mEmailField.getText().toString().trim();

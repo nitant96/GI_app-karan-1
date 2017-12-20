@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -122,6 +123,7 @@ public class ProductDetailActivity extends BaseActivity {
                 break;
             case R.id.action_url:
                 Toast.makeText(this,R.string.url,Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, WebViewActivity.class));
                 break;
             case R.id.action_location:
                 Toast.makeText(this,R.string.open_in_map,Toast.LENGTH_SHORT).show();

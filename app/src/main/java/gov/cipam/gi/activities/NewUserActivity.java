@@ -3,10 +3,12 @@ package gov.cipam.gi.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -23,9 +25,9 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
     CircleImageView appLogoImage;
     Button skipLoginButton,registerUserButton;
     FirebaseAuth mAuth;
-    LinearLayout linearLayout;
     int width,height;
-    float scaledDemsity;
+    float scaledDensity,xdpi,ydpi,densityDpi;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,16 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         launchActivity();
         mAuth = FirebaseAuth.getInstance();
 
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         DisplayMetrics metrics= Resources.getSystem().getDisplayMetrics();
         width= metrics.widthPixels;
         height=metrics.heightPixels;
-        scaledDemsity=metrics.scaledDensity;
+        scaledDensity=metrics.scaledDensity;
+        densityDpi=metrics.densityDpi;
+        xdpi=metrics.xdpi;
+        ydpi=metrics.ydpi;
+
 
         appLogoImage=findViewById(R.id.appLogoImage);
 
@@ -80,11 +87,14 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         switch (id){
 
             case R.id.skipLogin:
-                Toast.makeText(this,"Screen width= "+String.valueOf(width)+"\n"+"Screen Height= "+String.valueOf(height)+"\n"+"Density= "+String.valueOf(scaledDemsity),Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Screen width= "+String.valueOf(width)+"\n"+"Screen Height= "+String.valueOf(height)+"\n"+
+                        "Xdpi= "+String.valueOf(xdpi)+"\n"+"Ydpi="+String.valueOf(ydpi)+"\n"+"Density dpi="+String.valueOf(densityDpi)+
+                        "\n"+"Density= "+String.valueOf(scaledDensity),Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.registerUser:
                 startActivity(new Intent(this,LoginActivity.class));
+                break;
         }
     }
 }

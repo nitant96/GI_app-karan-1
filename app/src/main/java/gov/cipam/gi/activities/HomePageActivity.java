@@ -121,19 +121,7 @@ public class HomePageActivity extends BaseActivity
                 startActivity(new Intent(this,SettingsActivity.class));
                 break;
             case R.id.action_logout:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(R.string.logout);
-
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mAuth.signOut();
-                        startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
-                        finish();
-                    }
-                });
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                }).show();
+                logoutAction();
                 break;
             case R.id.action_search:
                 break;
@@ -213,6 +201,21 @@ public class HomePageActivity extends BaseActivity
         }
     }
 
+    public void logoutAction(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(R.string.logout);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mAuth.signOut();
+                startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        }).show();
+    }
     public void fragmentInflate(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_page_frame_layout, fragment);

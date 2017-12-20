@@ -1,5 +1,6 @@
 package gov.cipam.gi.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -11,11 +12,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import gov.cipam.gi.R;
@@ -26,6 +30,7 @@ public class ProductDetailActivity extends BaseActivity {
     CollapsingToolbarLayout collapsingToolbarLayout;
     ProductDetailFragment productDetailFragment;
     ImageView imageView;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +39,10 @@ public class ProductDetailActivity extends BaseActivity {
         setUpToolbar(this);
 
         collapsingToolbarLayout=findViewById(R.id.collapsing_toolbar);
+        progressBar=findViewById(R.id.progressBarDetails);
         collapsingToolbarLayout.setTitleEnabled(false);
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
         mToolbar.setSubtitle(R.string.home);
-
 
         imageView=findViewById(R.id.details_image);
         loadImage(imageView);
@@ -68,20 +73,30 @@ public class ProductDetailActivity extends BaseActivity {
     private void loadImage(final ImageView imageView) {
         this.imageView=imageView;
 
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean image_download = sharedPreferences.getBoolean(Constants.KEY_DOWNLOAD_IMAGES, true);
+        progressBar.setVisibility(View.VISIBLE);
 
         if(image_download){
             Picasso.with(this)
                     .load("http://i.imgur.com/DvpvklR.png")
-                    .placeholder(R.drawable.place_holder)
                     .fit()
-                    .into(imageView);
-            //imageView.setImageResource(R.drawable.image_gradient);
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
         }
         else
         {
-            imageView.setImageResource(R.drawable.image_off);
+            imageView.setImageResource(R.drawable.image_gradient);
         }
     }
 
@@ -110,6 +125,7 @@ public class ProductDetailActivity extends BaseActivity {
                 break;
             case R.id.action_location:
                 Toast.makeText(this,R.string.open_in_map,Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,MapsActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

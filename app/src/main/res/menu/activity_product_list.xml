@@ -4,6 +4,12 @@
 <item android:icon="@drawable/settings"
     android:id="@+id/action_settings_product_list"
     android:title="@string/settings"
-    app:showAsAction="always"/>
+    app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_refresh"
+        android:title="@string/menu_refresh"
+        app:showAsAction="collapseActionView" />
+
 
 </menu>

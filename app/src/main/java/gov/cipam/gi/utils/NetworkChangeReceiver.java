@@ -5,10 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 
-/**
- * Created by karan on 12/12/2017.
- */
-
 public abstract class NetworkChangeReceiver extends BroadcastReceiver {
 
     public static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";

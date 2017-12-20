@@ -42,6 +42,7 @@ dependencies {
     compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
+    implementation 'com.google.android.gms:play-services-maps:11.6.0'
 }
 apply plugin: 'com.google.gms.google-services'
 

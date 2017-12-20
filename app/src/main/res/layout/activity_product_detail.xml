@@ -20,14 +20,18 @@
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
+            <ProgressBar
+                android:id="@+id/progressBarDetails"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"/>
             <ImageView
                 android:id="@+id/details_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/image_parameter_larger"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
+                app:layout_collapseMode="none"
                 app:layout_collapseParallaxMultiplier="0.5" />
 
             <include

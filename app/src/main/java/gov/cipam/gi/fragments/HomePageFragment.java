@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +26,7 @@ import gov.cipam.gi.utils.RecyclerViewClickListener;
 import gov.cipam.gi.utils.RecyclerViewTouchListener;
 import gov.cipam.gi.viewholder.CategoryViewHolder;
 import gov.cipam.gi.viewholder.StateViewHolder;
-import gov.cipam.gi.adapters.ViewPageAdapter;
+import gov.cipam.gi.adapters.ImageViewPageAdapter;
 import gov.cipam.gi.model.Categories;
 import gov.cipam.gi.model.States;
 
@@ -36,7 +37,7 @@ import gov.cipam.gi.model.States;
 public class HomePageFragment extends Fragment implements RecyclerViewClickListener {
 
     RecyclerView rvState,rvCategory;
-    NestedScrollView scrollView;
+    ScrollView scrollView;
     AutoScrollViewPager autoScrollViewPager;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
     StatesFirebaseAdapter statesFirebaseAdapter;
@@ -82,7 +83,7 @@ public class HomePageFragment extends Fragment implements RecyclerViewClickListe
     }
 
     private void setAutoScroll() {
-        autoScrollViewPager.setAdapter(new ViewPageAdapter(getContext()));
+        autoScrollViewPager.setAdapter(new ImageViewPageAdapter(getContext()));
         autoScrollViewPager.getSlideBorderMode();
         autoScrollViewPager.isStopScrollWhenTouch();
         autoScrollViewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);

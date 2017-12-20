@@ -114,5 +114,9 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</string>
-    <string name="error_connection">Error</string>
+    <string name="error_connection">You\'re Offline </string>
+    <string name="connection_restore">Go Online</string>
+    <string name="welcome">Welcome!</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

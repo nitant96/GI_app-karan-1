@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.WindowManager;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
+import gov.cipam.gi.R;
 import gov.cipam.gi.common.SharedPref;
 import gov.cipam.gi.fragments.Onboarding1;
 import gov.cipam.gi.fragments.Onboarding2;
@@ -42,7 +44,7 @@ public class IntroActivity extends AppIntro {
         // Do something when the slide changes.
     }
 
-    private void finishOnboarding() {
+    public void finishOnboarding() {
         SharedPreferences preferences =
                 getSharedPreferences(Constants.MY_PREFERENCES, MODE_PRIVATE);
 
@@ -50,7 +52,7 @@ public class IntroActivity extends AppIntro {
                 .putBoolean(Constants.ONBOARDING_COMPLETE,true).apply();
 
         Users user = SharedPref.getSavedObjectFromPreference(this,Constants.KEY_USER_INFO,Constants.KEY_USER_DATA,Users.class);
-        startActivity(new Intent(this, SignInActivity.class));
+        startActivity(new Intent(this, NewUserActivity.class));
         finish();
     }
 
@@ -58,7 +60,8 @@ public class IntroActivity extends AppIntro {
         setBarColor(Color.TRANSPARENT);
         setSeparatorColor(Color.TRANSPARENT);
         showStatusBar(true);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        setImageNextButton(ContextCompat.getDrawable(getApplicationContext(),R.drawable.next));
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         setColorTransitionsEnabled(true);
         // Hide Skip/Done button.
         showSkipButton(true);

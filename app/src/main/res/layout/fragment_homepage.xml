@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scroll_view_home"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="gov.cipam.gi.activities.HomePageActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="56sp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="5">
 
         <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
             android:id="@+id/viewpager"
             android:layout_width="wrap_content"
-            android:layout_height="200sp" />
+            android:layout_height="200dp"
+            android:layout_weight="1"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_smaller"
+            android:layout_weight="2"
             android:background="?attr/layout_bg">
 
             <TextView
@@ -53,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_smaller"
+            android:layout_weight="2"
             android:background="?attr/layout_bg">
 
             <TextView
@@ -75,4 +79,4 @@
                 android:layout_below="@+id/Categories_text" />
         </RelativeLayout>
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</ScrollView>

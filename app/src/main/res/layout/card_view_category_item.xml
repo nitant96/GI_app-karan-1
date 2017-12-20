@@ -35,6 +35,12 @@
             android:textColor="?attr/category_title"
             android:theme="@style/MediumBodyText"
             android:typeface="serif" />
+
+        <ProgressBar
+            android:id="@+id/progressBarCategory"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 </RelativeLayout>
 

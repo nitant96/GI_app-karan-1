@@ -41,7 +41,7 @@ public class GoogleAuthentication {
 
 
     // [START auth_with_google]
-    public void firebaseAuthWithGoogle(final String email,final String name,GoogleSignInAccount acct,final ProgressDialog progressDialog) {
+    public void firebaseAuthWithGoogle( final GoogleSignInAccount acct, final ProgressDialog progressDialog) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -58,12 +58,12 @@ public class GoogleAuthentication {
 
                             // create a database reference for the user
                             mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_USERS).child(UID);
-                            mDatabase.child(Constants.KEY_CHILD_USERS).setValue(email);
-                            mDatabase.child(Constants.KEY_CHILD_NAME).setValue(name);
+                            mDatabase.child(Constants.KEY_CHILD_USERS).setValue(acct.getEmail());
+                            mDatabase.child(Constants.KEY_CHILD_NAME).setValue(acct.getDisplayName());
                             //userEmailVerification();
                             Users user = new Users();
-                            user.setEmail(email);
-                            user.setName(name);
+                            user.setEmail(acct.getEmail());
+                            user.setName(acct.getDisplayName());
                             SharedPref.saveObjectToSharedPreference(mContext,Constants.KEY_USER_INFO,Constants.KEY_USER_DATA,user);
                             progressDialog.dismiss();
                             mContext.startActivity(new Intent(mContext,HomePageActivity.class));

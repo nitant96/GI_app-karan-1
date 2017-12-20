@@ -1,26 +1,37 @@
-package gov.cipam.gi.activities;
+package gov.cipam.gi.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import gov.cipam.gi.R;
 import gov.cipam.gi.firebasemanager.FirebaseAuthentication;
 import gov.cipam.gi.utils.Constants;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * Created by karan on 12/17/2017.
+ */
+
+public class SignUpFragment extends Fragment implements View.OnClickListener{
+
     private EditText mEmailField,mPassField,mNameField;
     private TextView mLoginTextView;
     Button mSignupButton;
@@ -32,31 +43,39 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private DatabaseReference mUsersDatabase,mUserExists;
     private ProgressDialog mProgress;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_sign_up, container,false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference(Constants.KEY_USERS);
 
-        mEmailField =findViewById(R.id.signUpEmailField);
-        mPassField =findViewById(R.id.signUpPassField);
-        mNameField =findViewById(R.id.nameField);
+        mProgressDialog = new ProgressDialog(getContext());
 
-        mLoginTextView=findViewById(R.id.sign_in_text);
+    }
 
-        mSignupButton =findViewById(R.id.sign_up_button);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        imageView=findViewById(R.id.ImageViewSignUp);
-        mProgressDialog = new ProgressDialog(this);
+        mEmailField =view.findViewById(R.id.signUpEmailField);
+        mPassField =view.findViewById(R.id.signUpPassField);
+        mNameField =view.findViewById(R.id.nameField);
 
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        mSignupButton =view.findViewById(R.id.sign_up_button);
+
+        imageView=view.findViewById(R.id.ImageViewSignUp);
 
         imageView.setImageResource(R.drawable.image1);
 
         mSignupButton.setOnClickListener(this);
-        mLoginTextView.setOnClickListener(this);
+
     }
 
     private void signUp(){
@@ -77,26 +96,30 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         }
         else {
-            mProgressDialog.show();
-            // register user to firebase authentication
-            // store name and email to firebase database
-            FirebaseAuthentication firebaseAuthentication=new FirebaseAuthentication(this);
-            firebaseAuthentication.startSignUp(email,password,name,mProgressDialog);
+            String pattern = "((!)(@)(#)($)(%)(^)(&))";
+            Pattern r = Pattern.compile(pattern);
+            Matcher m = r.matcher(password);
+            if (m.find()) {
+                mProgressDialog.show();
+                // register user to firebase authentication
+                // store name and email to firebase database
+                FirebaseAuthentication firebaseAuthentication=new FirebaseAuthentication(getContext());
+                firebaseAuthentication.startSignUp(email,password,name,mProgressDialog);
+            }else {
+                Toast.makeText(getContext(),"Password should contain at least one special character",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 
     @Override
     public void onClick(View view) {
-         int id=view.getId();
+        int id=view.getId();
 
-         switch (id){
-             case R.id.sign_up_button:
-                 signUp();
-                 break;
-             case R.id.sign_in_text:
-                 startActivity(new Intent(this,SignInActivity.class));
-                 finish();
-                 break;
-         }
+        switch (id){
+            case R.id.sign_up_button:
+                signUp();
+                break;
+        }
     }
 }

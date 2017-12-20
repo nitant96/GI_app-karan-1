@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".activities.SignInActivity">
+    android:padding="@dimen/activity_horizontal_margin">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/signin_image_view"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="10sp"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/signinTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/app_name"
-        android:textColor="@color/black_1"
-        android:textSize="30sp" />
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        tools:ignore="ContentDescription" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/signInEmailFieldLayout"
-        app:passwordToggleEnabled="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        app:passwordToggleEnabled="true">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/signInEmailField"
@@ -48,6 +38,7 @@
         android:id="@+id/signInPassFieldLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         app:passwordToggleEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -55,25 +46,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
+            android:fontFamily="serif-monospace"
             android:hint="@string/password_hint"
-            android:longClickable="false"
             android:inputType="textPassword"
+            android:longClickable="false"
             android:textColor="@android:color/black" />
 
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/sign_in_button"
-        style="?android:textAppearanceSmall"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16sp"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@drawable/btn_gradient_blue"
         android:gravity="center_vertical|center_horizontal"
-        android:hapticFeedbackEnabled="true"
+        android:hapticFeedbackEnabled="false"
         android:text="@string/sign_in"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:textColor="@android:color/white" />
 
     <!-- Link to Login Screen -->
 
@@ -82,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dip"
+        android:layout_marginTop="20dp"
         android:text="@string/forgot_pass"
         android:textAllCaps="false"
         android:textSize="12sp" />
@@ -91,24 +82,15 @@
         android:id="@+id/div"
         android:layout_width="match_parent"
         android:layout_height="1sp"
-        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small"
         android:layout_marginStart="@dimen/padding_small"
-        android:background="@color/greyColor" />
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/greyColor"
+        android:baselineAligned="false" />
 
-    <TextView
-        android:id="@+id/signupText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dip"
-        android:text="@string/new_user"
-        android:textAllCaps="false"
-        android:textSize="12sp" />
     <com.google.android.gms.common.SignInButton
+        android:id="@+id/google_signin_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/google_signin_button"
-        android:layout_marginTop="16dp">
-    </com.google.android.gms.common.SignInButton>
+        android:layout_marginTop="16dp" />
 </LinearLayout>

@@ -54,6 +54,4 @@ public class ProductDetailFragment extends Fragment {
         ExpandableTextView expTv1 = view.findViewById(R.id.expand_text_view);
         expTv1.setText(getString(R.string.long_text));
     }
-
-
 }

@@ -4,14 +4,18 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,8 +24,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import gov.cipam.gi.R;
 import gov.cipam.gi.common.SharedPref;
@@ -29,6 +35,8 @@ import gov.cipam.gi.fragments.HomePageFragment;
 import gov.cipam.gi.fragments.Tab2Fragment;
 import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
+import gov.cipam.gi.utils.NetworkChangeReceiver;
+import gov.cipam.gi.utils.NetworkUtil;
 
 public class HomePageActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -40,6 +48,9 @@ public class HomePageActivity extends BaseActivity
     HomePageFragment homePageFragment;
     SearchView searchView;
     Tab2Fragment tab2Fragment;
+    FrameLayout frameLayout;
+
+    NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,8 @@ public class HomePageActivity extends BaseActivity
         setContentView(R.layout.activity_home_page);
 
         setUpToolbar(this);
+
+        showErrorSnackbar();
         homePageFragment =new HomePageFragment();
         tab2Fragment =new Tab2Fragment();
 
@@ -78,6 +91,7 @@ public class HomePageActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+
         super.onBackPressed();
     }
 
@@ -112,7 +126,7 @@ public class HomePageActivity extends BaseActivity
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mAuth.signOut();
-                        startActivity(new Intent(HomePageActivity.this, SignInActivity.class));
+                        startActivity(new Intent(HomePageActivity.this, LoginActivity.class));
                         finish();
                     }
                 });
@@ -170,14 +184,23 @@ public class HomePageActivity extends BaseActivity
         return true;
     }
 
-    /*@Override
+    @Override
     protected void onStart() {
+        super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser ==null){
-            startActivity(new Intent(this,SignInActivity.class));
+            startActivity(new Intent(this,NewUserActivity.class));
         }
-        super.onStart();
-    }*/
+        registerReceiver(networkChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        // register broadcast receiver which listens for change in network state
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // unregister broadcast receiver
+        unregisterReceiver(networkChangeReceiver);
+    }
 
     private void setUserName() {
         if(user!=null) {
@@ -216,4 +239,55 @@ public class HomePageActivity extends BaseActivity
 
     }
 
+    private void showErrorSnackbar() {
+
+        networkChangeReceiver = new NetworkChangeReceiver() {
+
+            Snackbar snackbar = null;
+
+            @Override
+            protected void dismissSnackbar() {
+
+                if (snackbar != null) {
+
+                    // dismiss snackbar
+                    snackbar.dismiss();
+                }
+            }
+
+            @Override
+            protected void setUpLayout() {
+
+                frameLayout = findViewById(R.id.home_page_frame_layout);
+
+                // check if no internet connection
+                if (!NetworkUtil.getConnectivityStatus(HomePageActivity.this)) {
+
+                    Log.e("ERRROR", "");
+
+                    snackbar = Snackbar.make(frameLayout, R.string.error_connection, Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setActionTextColor(Color.CYAN);
+                    snackbar.setAction(R.string.connection_restore, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                        }
+                    });
+
+                    final View snackBarView = snackbar.getView();
+                    final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackBarView.getLayoutParams();
+
+                    params.setMargins(params.leftMargin,
+                            params.topMargin,
+                            params.rightMargin,
+                            (int) (params.bottomMargin + getResources().getDimension(R.dimen.snackbar_margin)));
+
+                    snackBarView.setLayoutParams(params);
+                    snackBarView.setElevation(0);
+
+                    snackbar.show();
+                }
+            }
+        };
+    }
 }

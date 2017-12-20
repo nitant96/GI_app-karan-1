@@ -26,6 +26,7 @@ public class NetworkUtil {
                 if (netInfo.isConnected())
                     haveConnectedMobile = true;
         }
+
         return haveConnectedWifi || haveConnectedMobile;
     }
 }

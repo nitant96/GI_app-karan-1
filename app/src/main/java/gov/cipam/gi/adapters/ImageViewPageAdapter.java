@@ -18,7 +18,7 @@ import gov.cipam.gi.R;
  * Created by Deepak on 11/18/2017.
  */
 
-public class ViewPageAdapter extends PagerAdapter{
+public class ImageViewPageAdapter extends PagerAdapter{
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private int[] mResources = {
@@ -28,7 +28,7 @@ public class ViewPageAdapter extends PagerAdapter{
 
     };
 
-    public ViewPageAdapter(Context context) {
+    public ImageViewPageAdapter(Context context) {
         this.mContext = context;
 
     }

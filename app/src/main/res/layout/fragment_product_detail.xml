@@ -44,11 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/expand_text_view"/>
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/seller_recycler_view"/>
     </RelativeLayout>
 
 

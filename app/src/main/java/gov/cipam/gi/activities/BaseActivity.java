@@ -25,12 +25,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setUpFont();
 
         super.onCreate(savedInstanceState);
 
         sharedPreferencesListener();
-
     }
 
     @Override

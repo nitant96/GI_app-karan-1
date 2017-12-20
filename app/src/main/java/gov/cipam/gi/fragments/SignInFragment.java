@@ -1,15 +1,17 @@
-package gov.cipam.gi.activities;
+package gov.cipam.gi.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,16 +25,22 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import gov.cipam.gi.R;
 import gov.cipam.gi.firebasemanager.FirebaseAuthentication;
 import gov.cipam.gi.firebasemanager.GoogleAuthentication;
-import gov.cipam.gi.utils.Constants;
 
-public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView mCreateAccount, mForgotPass;
+import static android.content.Context.MODE_PRIVATE;
+
+/**
+ * Created by karan on 12/17/2017.
+ */
+
+public class SignInFragment extends Fragment implements View.OnClickListener {
+
+    TextView mForgotPass;
+    com.google.android.gms.common.SignInButton googleSignInButton;
     private EditText mEmailField, mPassField;
     Button mSignInButton;
     CircleImageView imageView;
@@ -45,43 +53,48 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private static final int RC_SIGN_IN = 9001;
     SharedPreferences mPrefs;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-        launchActivity();
-        mAuth = FirebaseAuth.getInstance();
-        mPrefs = getPreferences(MODE_PRIVATE);
-
-        mCreateAccount =  findViewById(R.id.signupText);
-        mForgotPass =  findViewById(R.id.forgotPass);
-
-        mEmailField =  findViewById(R.id.signInEmailField);
-        mPassField =  findViewById(R.id.signInPassField);
-        mSignInButton =  findViewById(R.id.sign_in_button);
-        imageView=findViewById(R.id.signin_image_view);
-
-        mProgressDialog = new ProgressDialog(this);
-
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
-
-        imageView.setImageResource(R.drawable.image1);
-        mSignInButton.setOnClickListener(this);
-        mForgotPass.setOnClickListener(this);
-        mCreateAccount.setOnClickListener(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_sign_in, container, false);
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        mPrefs = getActivity().getPreferences(MODE_PRIVATE);
+
+        mProgressDialog = new ProgressDialog(getContext());
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mForgotPass =  view.findViewById(R.id.forgotPass);
+
+        mEmailField =  view.findViewById(R.id.signInEmailField);
+        mPassField =  view.findViewById(R.id.signInPassField);
+
+        mSignInButton =  view.findViewById(R.id.sign_in_button);
+        googleSignInButton=view.findViewById(R.id.google_signin_button);
+
+        imageView=view.findViewById(R.id.signin_image_view);
+
+        imageView.setImageResource(R.drawable.image1);
+
+        mSignInButton.setOnClickListener(this);
+        mForgotPass.setOnClickListener(this);
+        googleSignInButton.setOnClickListener(this);
+
     }
 
     private void forgotPassword() {
         email = mEmailField.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             mEmailField.setError(getString(R.string.email_error));
-            Toast.makeText(SignInActivity.this, getString(R.string.toast_empty_email),
+            Toast.makeText(getContext(), getString(R.string.toast_empty_email),
                     Toast.LENGTH_SHORT).show();
         } else {
             mEmailField.setError(getString(R.string.empty_email_error));
@@ -90,7 +103,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(SignInActivity.this, getString(R.string.toast_password_reset_email),
+                                Toast.makeText(getContext(), getString(R.string.toast_password_reset_email),
                                         Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, "Email sent.");
                             }
@@ -106,52 +119,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                gAuth = new GoogleAuthentication(this);
-                gAuth.firebaseAuthWithGoogle(account.getEmail(),account.getDisplayName(),account,mProgressDialog);
-
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-                Toast.makeText(this, "failed."+e,
-                        Toast.LENGTH_SHORT).show();
-                mProgressDialog.dismiss();
-
-            }
-        }
-    }
-    public void launchActivity() {
-        SharedPreferences preferences =
-                getSharedPreferences(Constants.MY_PREFERENCES, MODE_PRIVATE);
-
-        if (!preferences.getBoolean(Constants.ONBOARDING_COMPLETE, false)) {
-
-            startActivity(new Intent(this, IntroActivity.class));
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            startActivity(new Intent(this, HomePageActivity.class));
-            finish();
-        }
     }
 
     private void startSignIn(){
@@ -173,27 +143,45 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             mProgressDialog.show();
 
-            FirebaseAuthentication firebaseAuthentication=new FirebaseAuthentication(this);
+            FirebaseAuthentication firebaseAuthentication=new FirebaseAuthentication(getContext());
             firebaseAuthentication.startSignIn(email,password,mProgressDialog);
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                gAuth = new GoogleAuthentication(getContext());
+                gAuth.firebaseAuthWithGoogle(account,mProgressDialog);
+
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+                Toast.makeText(getContext(), "failed."+e,
+                        Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+
+            }
+        }
+    }
     @Override
     public void onClick(View view) {
         int id=view.getId();
 
         switch (id){
             case R.id.sign_in_button:
-               startSignIn();
+                startSignIn();
                 break;
 
             case R.id.forgotPass:
                 forgotPassword();
-                break;
-
-            case R.id.signupText:
-                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                 break;
 
             case R.id.google_signin_button:

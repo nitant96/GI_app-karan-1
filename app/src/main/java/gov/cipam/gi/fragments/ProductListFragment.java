@@ -35,11 +35,11 @@ import gov.cipam.gi.viewholder.ProductViewHolder;
 
 public class ProductListFragment extends Fragment implements RecyclerViewClickListener,ListDataProgressListener {
 
-    RecyclerView productListRecycler;
-    DatabaseReference mDatabaseProduct;
-    ProductFirebaseAdapter productFirebaseAdapter;
-    ProgressBar progressBar;
-    FirebaseAuth mAuth;
+    RecyclerView                productListRecycler;
+    DatabaseReference           mDatabaseProduct;
+    ProductFirebaseAdapter      productFirebaseAdapter;
+    ProgressBar                 progressBar;
+    FirebaseAuth                mAuth;
 
     public ProductListFragment() {
     }

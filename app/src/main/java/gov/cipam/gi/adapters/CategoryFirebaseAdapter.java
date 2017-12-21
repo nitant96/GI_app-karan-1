@@ -17,8 +17,8 @@ import gov.cipam.gi.viewholder.CategoryViewHolder;
 
 public class CategoryFirebaseAdapter extends FirebaseRecyclerAdapter<Categories,CategoryViewHolder> {
 
-    private DatabaseReference mRef;
-    private Context mContext;
+    private DatabaseReference   mRef;
+    private Context             mContext;
 
     public CategoryFirebaseAdapter(Context context, Class<Categories> modelClass, int modelLayout,
                                  Class<CategoryViewHolder> viewHolderClass,

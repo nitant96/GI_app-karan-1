@@ -15,9 +15,9 @@ import gov.cipam.gi.fragments.ProductListFragment;
 
 public class ProductListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-    private static final String LOG_TAG ="Ref   resh" ;
-    ProductListFragment productListFragment;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private static final String         LOG_TAG ="Ref   resh" ;
+    ProductListFragment                 productListFragment;
+    SwipeRefreshLayout                  swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

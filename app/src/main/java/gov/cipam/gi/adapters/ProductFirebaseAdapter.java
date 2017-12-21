@@ -18,9 +18,9 @@ import gov.cipam.gi.viewholder.ProductViewHolder;
 
 public class ProductFirebaseAdapter extends FirebaseRecyclerAdapter<Product,ProductViewHolder>{
 
-    private DatabaseReference mRef;
-    private Context mContext;
-    private ChildEventListener mChildEventListener;
+    private DatabaseReference   mRef;
+    private Context             mContext;
+    private ChildEventListener  mChildEventListener;
 
 
     public ProductFirebaseAdapter(Context context, Class<Product> modelClass, int modelLayout,

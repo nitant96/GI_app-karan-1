@@ -28,10 +28,10 @@ import gov.cipam.gi.fragments.ProductDetailFragment;
 import gov.cipam.gi.utils.Constants;
 
 public class ProductDetailActivity extends BaseActivity {
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    ProductDetailFragment productDetailFragment;
-    ImageView imageView;
-    ProgressBar progressBar;
+    CollapsingToolbarLayout     collapsingToolbarLayout;
+    ProductDetailFragment       productDetailFragment;
+    ImageView                   imageView;
+    ProgressBar                 progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import com.google.android.gms.common.SignInButton;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
@@ -39,19 +40,19 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
-    TextView mForgotPass;
-    com.google.android.gms.common.SignInButton googleSignInButton;
-    private EditText mEmailField, mPassField;
-    Button mSignInButton;
-    CircleImageView imageView;
-    ProgressDialog mProgressDialog;
-    private FirebaseAuth mAuth;
-    private String email, password;
-    private static String TAG = "SignInActivity";
-    GoogleSignInClient mGoogleSignInClient;
-    GoogleAuthentication gAuth;
-    private static final int RC_SIGN_IN = 9001;
-    SharedPreferences mPrefs;
+    TextView                    mForgotPass;
+    SignInButton                googleSignInButton;
+    private EditText            mEmailField, mPassField;
+    Button                      mSignInButton;
+    CircleImageView             imageView;
+    ProgressDialog              mProgressDialog;
+    private FirebaseAuth        mAuth;
+    private String              email, password;
+    private static String       TAG = "SignInActivity";
+    GoogleSignInClient          mGoogleSignInClient;
+    GoogleAuthentication        gAuth;
+    private static final int    RC_SIGN_IN = 9001;
+    SharedPreferences           mPrefs;
 
     @Nullable
     @Override

@@ -17,8 +17,8 @@ import gov.cipam.gi.R;
  */
 
 public class StateViewHolder extends RecyclerView.ViewHolder{
-    private TextView mName;
-    private ImageView mDp;
+    private TextView    mName;
+    private ImageView   mDp;
     private ProgressBar progressBar;
 
 

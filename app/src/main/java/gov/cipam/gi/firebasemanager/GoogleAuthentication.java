@@ -30,9 +30,9 @@ import static android.content.ContentValues.TAG;
  */
 
 public class GoogleAuthentication {
-    private Context mContext;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private Context             mContext;
+    private FirebaseAuth        mAuth;
+    private DatabaseReference   mDatabase;
 
     public GoogleAuthentication(Context context) {
         this.mContext=context;

@@ -14,8 +14,8 @@ import gov.cipam.gi.viewholder.SellerViewHolder;
  */
 public class SellerFirebaseAdapter extends FirebaseRecyclerAdapter<Seller, SellerViewHolder> {
 
-    DatabaseReference mRef;
-    Context mContext;
+    DatabaseReference   mRef;
+    Context             mContext;
 
         public SellerFirebaseAdapter(Context context, Class<Seller> modelClass, int modelLayout,
                                      Class<SellerViewHolder> viewHolderClass,

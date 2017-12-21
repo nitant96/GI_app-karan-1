@@ -17,8 +17,8 @@ import gov.cipam.gi.model.Product;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView mTitle,mFiller,mCategory,mState;
-    private ImageView imageView;
+    private TextView    mTitle,mFiller,mCategory,mState;
+    private ImageView   imageView;
 
     public ProductViewHolder(View itemView) {
         super(itemView);

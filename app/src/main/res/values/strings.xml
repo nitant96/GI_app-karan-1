@@ -119,4 +119,5 @@ limitations under the License.</string>
     <string name="welcome">Welcome!</string>
     <string name="menu_refresh">Refresh</string>
     <string name="title_activity_maps">Map</string>
+    <string name="social_feed">Social Feed</string>
 </resources>

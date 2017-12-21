@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.ViewGroup;
 
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +24,10 @@ import gov.cipam.gi.viewholder.SellerViewHolder;
  */
 
 public class ProductDetailFragment extends Fragment {
-    Seller seller;
-    RecyclerView sellerRecyclerView;
-    SellerFirebaseAdapter sellerFirebaseAdapter;
-    DatabaseReference mDatabaseReference;
+    Seller                  seller;
+    RecyclerView            sellerRecyclerView;
+    SellerFirebaseAdapter   sellerFirebaseAdapter;
+    DatabaseReference       mDatabaseReference;
 
     @Nullable
     @Override
@@ -50,7 +51,7 @@ public class ProductDetailFragment extends Fragment {
         sellerRecyclerView= view.findViewById(R.id.seller_recycler_view);
         sellerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         sellerRecyclerView.setAdapter(sellerFirebaseAdapter);
-        sellerRecyclerView.addItemDecoration(new android.support.v7.widget.DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        sellerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         ExpandableTextView expTv1 = view.findViewById(R.id.expand_text_view);
         expTv1.setText(getString(R.string.long_text));
     }

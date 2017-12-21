@@ -22,9 +22,9 @@ import gov.cipam.gi.activities.IntroActivity;
 
 public class Onboarding2 extends Fragment implements ISlideBackgroundColorHolder,View.OnClickListener {
 
-    LinearLayout layoutContainer;
-    Button skipButton;
-    IntroActivity introActivity;
+    LinearLayout     layoutContainer;
+    Button           skipButton;
+    IntroActivity    introActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

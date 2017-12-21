@@ -15,8 +15,8 @@ import gov.cipam.gi.model.States;
 import gov.cipam.gi.viewholder.StateViewHolder;
 
 public class StatesFirebaseAdapter extends FirebaseRecyclerAdapter<States, StateViewHolder> {
-    private DatabaseReference mRef;
-    private Context mContext;
+    private DatabaseReference   mRef;
+    private Context             mContext;
 
     public StatesFirebaseAdapter(Context context, Class<States> modelClass, int modelLayout,
                                  Class<StateViewHolder> viewHolderClass,

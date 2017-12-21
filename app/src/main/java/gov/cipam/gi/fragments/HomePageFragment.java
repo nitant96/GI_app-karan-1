@@ -36,25 +36,31 @@ import gov.cipam.gi.model.States;
 
 public class HomePageFragment extends Fragment implements RecyclerViewClickListener {
 
-    RecyclerView rvState,rvCategory;
-    ScrollView scrollView;
-    AutoScrollViewPager autoScrollViewPager;
-    RecyclerView.LayoutManager layoutManager,layoutManager2;
-    StatesFirebaseAdapter statesFirebaseAdapter;
-    CategoryFirebaseAdapter categoryFirebaseAdapter;
-    FirebaseAuth mAuth;
-    DatabaseReference mDatabaseState,mDatabaseCategory;
+    RecyclerView                rvState,rvCategory;
+    ScrollView                  scrollView;
+    AutoScrollViewPager         autoScrollViewPager;
+    RecyclerView.LayoutManager  layoutManager,layoutManager2;
+    StatesFirebaseAdapter       statesFirebaseAdapter;
+    CategoryFirebaseAdapter     categoryFirebaseAdapter;
+    DatabaseReference           mDatabaseState,mDatabaseCategory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_homepage, container, false);
+
+        View view= inflater.inflate(R.layout.fragment_homepage, container, false);
+
+        rvState =  view.findViewById(R.id.recycler_states);
+        rvCategory =  view.findViewById(R.id.recycler_categories);
+        autoScrollViewPager = view.findViewById(R.id.viewpager);
+        scrollView=view.findViewById(R.id.scroll_view_home);
+
+        return view;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
         mDatabaseState = FirebaseDatabase.getInstance().getReference("States");
         mDatabaseCategory = FirebaseDatabase.getInstance().getReference("Categories");
         statesFirebaseAdapter=new StatesFirebaseAdapter(getContext(),States.class,R.layout.card_view_state_item,StateViewHolder.class,mDatabaseState);
@@ -64,22 +70,27 @@ public class HomePageFragment extends Fragment implements RecyclerViewClickListe
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        rvState =  view.findViewById(R.id.recycler_states);
-        rvCategory =  view.findViewById(R.id.recycler_categories);
-        autoScrollViewPager = view.findViewById(R.id.viewpager);
-        scrollView=view.findViewById(R.id.scroll_view_home);
         scrollView.setSmoothScrollingEnabled(true);
+
         layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         layoutManager2 = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvState.setLayoutManager(layoutManager);
+        rvCategory.setLayoutManager(layoutManager2);
         rvState.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvState,this));
         rvState.setAdapter(statesFirebaseAdapter);
-        rvCategory.setLayoutManager(layoutManager2);
-        //rvCategory.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvCategory,this));
+        rvCategory.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvCategory,this));
         rvCategory.setAdapter(categoryFirebaseAdapter);
         setAutoScroll();
-        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+
     }
 
     private void setAutoScroll() {
@@ -89,7 +100,6 @@ public class HomePageFragment extends Fragment implements RecyclerViewClickListe
         autoScrollViewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
         autoScrollViewPager.startAutoScroll();
         autoScrollViewPager.setScrollDurationFactor(5);
-        autoScrollViewPager.setStopScrollWhenTouch(true);
         autoScrollViewPager.setInterval(3000);
     }
 

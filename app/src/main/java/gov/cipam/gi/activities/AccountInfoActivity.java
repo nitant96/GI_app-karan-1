@@ -23,15 +23,15 @@ import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
 
 public class AccountInfoActivity extends BaseActivity implements View.OnClickListener {
-    private TextView mchangePass,mUpdatePass;
-    private TextInputLayout mChangePassFieldLayout;
-    private EditText mNameField,mEmailField,mChangePassField;
-    private String name,email;
-    private DatabaseReference mDatabaseUser;
-    private static String TAG = "AccountInfoActivity";
-    private static String user_id;
-    private FirebaseAuth mAuth;
-    private Users user;
+    private TextView                mchangePass,mUpdatePass;
+    private TextInputLayout         mChangePassFieldLayout;
+    private EditText                mNameField,mEmailField,mChangePassField;
+    private String                  name,email;
+    private DatabaseReference       mDatabaseUser;
+    private static String           TAG = "AccountInfoActivity";
+    private static String           user_id;
+    private FirebaseAuth            mAuth;
+    private Users                   user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
@@ -32,7 +34,8 @@ import com.google.firebase.auth.FirebaseUser;
 import gov.cipam.gi.R;
 import gov.cipam.gi.common.SharedPref;
 import gov.cipam.gi.fragments.HomePageFragment;
-import gov.cipam.gi.fragments.Tab2Fragment;
+import gov.cipam.gi.fragments.MapsFragment;
+import gov.cipam.gi.fragments.SocialFeedFragment;
 import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
 import gov.cipam.gi.utils.NetworkChangeReceiver;
@@ -46,8 +49,9 @@ public class HomePageActivity extends BaseActivity
     Users user;
     TextView nav_user,nav_email;
     HomePageFragment homePageFragment;
+    SocialFeedFragment socialFeedFragment;
     SearchView searchView;
-    Tab2Fragment tab2Fragment;
+    MapsFragment mapsFragment;
     FrameLayout frameLayout;
 
     NetworkChangeReceiver networkChangeReceiver;
@@ -61,7 +65,6 @@ public class HomePageActivity extends BaseActivity
 
         showErrorSnackbar();
         homePageFragment =new HomePageFragment();
-        tab2Fragment =new Tab2Fragment();
 
         if(savedInstanceState==null){
             fragmentInflate(homePageFragment);
@@ -125,8 +128,6 @@ public class HomePageActivity extends BaseActivity
                 break;
             case R.id.action_search:
                 break;
-            case R.id.action_open_settings:
-                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -140,8 +141,13 @@ public class HomePageActivity extends BaseActivity
                 case R.id.navigation_home:
                     fragmentInflate(homePageFragment);
                     return true;
-                case R.id.navigation_dashboard:
-                    fragmentInflate(tab2Fragment);
+                case R.id.navigation_map:
+                    mapsFragment =new MapsFragment();
+                    fragmentInflate(mapsFragment);
+                    return true;
+                case R.id.navigation_social_feed:
+                    socialFeedFragment =new SocialFeedFragment();
+                    fragmentInflate(socialFeedFragment);
                     return true;
             }
             return false;
@@ -273,7 +279,7 @@ public class HomePageActivity extends BaseActivity
                     snackbar.setAction(R.string.connection_restore, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                            startActivityForResult(new Intent(Settings.ACTION_SETTINGS), 0);
                         }
                     });
 
@@ -286,7 +292,9 @@ public class HomePageActivity extends BaseActivity
                             (int) (params.bottomMargin + getResources().getDimension(R.dimen.snackbar_margin)));
 
                     snackBarView.setLayoutParams(params);
-                    snackBarView.setElevation(0);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        snackBarView.setElevation(0);
+                    }
 
                     snackbar.show();
                 }

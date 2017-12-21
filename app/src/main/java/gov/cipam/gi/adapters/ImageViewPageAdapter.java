@@ -19,8 +19,8 @@ import gov.cipam.gi.R;
  */
 
 public class ImageViewPageAdapter extends PagerAdapter{
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
+    private Context             mContext;
+    private LayoutInflater      mLayoutInflater;
     private int[] mResources = {
             R.drawable.image1,
             R.drawable.image2,

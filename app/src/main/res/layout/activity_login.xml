@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fadeScrollbars="false"
-            android:nestedScrollingEnabled="true"
             android:saveEnabled="true"
             app:tabIndicatorColor="@color/white"
             app:tabSelectedTextColor="@color/white"

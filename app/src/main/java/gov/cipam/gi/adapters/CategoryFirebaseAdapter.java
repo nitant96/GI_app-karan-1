@@ -33,7 +33,6 @@ public class CategoryFirebaseAdapter extends FirebaseRecyclerAdapter<Categories,
     @Override
     protected void populateViewHolder(CategoryViewHolder viewHolder, final Categories model,final int position) {
     viewHolder.bindCategoryDetails(model);
-        ViewCompat.setTransitionName(viewHolder.mDp, String.valueOf(position) + "_image");
     }
 }
 

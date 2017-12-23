@@ -3,13 +3,13 @@
     android:defaultValue="true"
     android:enabled="true">
 
-    <PreferenceCategory android:title="@string/settings_general">
+    <c android:title="@string/settings_general">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/image_download_key"
             android:summary="@string/settings_download_summary"
             android:title="@string/settings_save_data" />
-    </PreferenceCategory>
+    </c>
 
     <PreferenceCategory android:title="@string/settings_look_and_feel">
 

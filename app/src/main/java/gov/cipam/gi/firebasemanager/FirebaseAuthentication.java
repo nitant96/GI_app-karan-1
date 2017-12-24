@@ -32,9 +32,9 @@ import static android.content.ContentValues.TAG;
  */
 
 public class FirebaseAuthentication {
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase,mUserExists;
-    private Context mContext;
+    private FirebaseAuth        mAuth;
+    private DatabaseReference   mDatabase,mUserExists;
+    private Context             mContext;
 
     public FirebaseAuthentication(Context context) {
             this.mContext=context;

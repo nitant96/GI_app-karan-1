@@ -1,12 +1,16 @@
 package gov.cipam.gi.activities;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,15 +27,15 @@ import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
 
 public class AccountInfoActivity extends BaseActivity implements View.OnClickListener {
-    private TextView mchangePass,mUpdatePass;
-    private TextInputLayout mChangePassFieldLayout;
-    private EditText mNameField,mEmailField,mChangePassField;
-    private String name,email;
-    private DatabaseReference mDatabaseUser;
-    private static String TAG = "AccountInfoActivity";
-    private static String user_id;
-    private FirebaseAuth mAuth;
-    private Users user;
+    private TextView                mchangePass,mUpdatePass;
+    private TextInputLayout         mChangePassFieldLayout;
+    private EditText                mNameField,mEmailField,mChangePassField;
+    private String                  name,email;
+    private DatabaseReference       mDatabaseUser;
+    private static String           TAG = "AccountInfoActivity";
+    private static String           user_id;
+    private FirebaseAuth            mAuth;
+    private Users                   user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +47,9 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
 
         mNameField =findViewById(R.id.nameField);
         mEmailField =findViewById(R.id.emailField);
-        mChangePassFieldLayout =findViewById(R.id.changePassFieldLayout);
-        mChangePassField = findViewById(R.id.changePassField);
         mchangePass =findViewById(R.id.changePass);
-        mUpdatePass =findViewById(R.id.updatePass);
-
         mchangePass.setOnClickListener(this);
-        mUpdatePass.setOnClickListener(this);
+
 
         }
 
@@ -69,7 +69,6 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
         else {
             Toast.makeText(AccountInfoActivity.this,getString(R.string.toast_signin_again_request),Toast.LENGTH_LONG).show();
         }
-
         super.onStart();
     }
 
@@ -80,17 +79,30 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
 
         switch (id){
             case R.id.changePass:
-                mChangePassFieldLayout.setVisibility(View.VISIBLE);
-                mUpdatePass.setVisibility(View.VISIBLE);
+                changePasswordDialog();
                 break;
-            case R.id.updatePass:
+        }
+    }
+
+    private void changePasswordDialog() {
+
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AccountInfoActivity.this);
+        alertDialog.setTitle("Change Password");
+        alertDialog.setMessage("Enter new password");
+
+        final EditText newPass = new EditText(AccountInfoActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        newPass.setLayoutParams(lp);
+        alertDialog.setView(newPass);
+
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String newPassword = mChangePassField.getText().toString().trim();
 
-                if(TextUtils.isEmpty(newPassword)){
-                    mChangePassField.setError(getString(R.string.new_password_enter_error));}
-
-                else{
+                final String newPassword = newPass.getText().toString();
+                if (!TextUtils.isEmpty(newPassword)){
                     user.updatePassword(newPassword)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -98,14 +110,25 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
                                     if (task.isSuccessful()) {
                                         Toast.makeText(AccountInfoActivity.this, getString(R.string.toast_password_change_success),
                                                 Toast.LENGTH_SHORT).show();
-                                        mChangePassFieldLayout.setVisibility(View.GONE);
-                                        mUpdatePass.setVisibility(View.GONE);
                                         Log.d(TAG, "User password updated.");
                                     }
+                                    else Toast.makeText(AccountInfoActivity.this, getString(R.string.toast_password_change_failed),
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             });
-
                 }
-        }
+                else newPass.setError("Enter Password");
+            }
+        });
+
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialog.show();
     }
+
+
 }

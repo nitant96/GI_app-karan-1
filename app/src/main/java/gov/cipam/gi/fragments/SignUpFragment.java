@@ -32,16 +32,16 @@ import gov.cipam.gi.utils.Constants;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener{
 
-    private EditText mEmailField,mPassField,mNameField;
-    private TextView mLoginTextView;
-    Button mSignupButton;
-    ProgressDialog mProgressDialog;
-    FirebaseAuth mAuth;
-    CircleImageView imageView;
-    private String email,password,name;
-    private static String TAG="Create Account";
-    private DatabaseReference mUsersDatabase,mUserExists;
-    private ProgressDialog mProgress;
+    private EditText                mEmailField,mPassField,mNameField;
+    private TextView                mLoginTextView;
+    Button                          mSignupButton;
+    ProgressDialog                  mProgressDialog;
+    FirebaseAuth                    mAuth;
+    CircleImageView                 imageView;
+    private String                  email,password,name;
+    private static String           TAG="Create Account";
+    private DatabaseReference       mUsersDatabase,mUserExists;
+    private ProgressDialog          mProgress;
 
     @Nullable
     @Override

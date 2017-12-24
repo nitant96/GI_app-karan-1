@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -55,17 +56,23 @@ downloadThread downloadThread1;
         preferences.edit()
                 .putBoolean(Constants.ONBOARDING_COMPLETE,true).apply();
 
-        Users user = SharedPref.getSavedObjectFromPreference(this,Constants.KEY_USER_INFO,Constants.KEY_USER_DATA,Users.class);
         startActivity(new Intent(this, NewUserActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 
     public void setSpecs(){
         setBarColor(Color.TRANSPARENT);
         setSeparatorColor(Color.TRANSPARENT);
-        showStatusBar(true);
         setImageNextButton(ContextCompat.getDrawable(getApplicationContext(),R.drawable.next));
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         setColorTransitionsEnabled(true);
         // Hide Skip/Done button.
         showSkipButton(true);

@@ -29,10 +29,10 @@ import gov.cipam.gi.model.Product;
 import gov.cipam.gi.utils.Constants;
 
 public class ProductDetailActivity extends BaseActivity {
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    ProductDetailFragment productDetailFragment;
-    ImageView imageView;
-    ProgressBar progressBar;
+    CollapsingToolbarLayout     collapsingToolbarLayout;
+    ProductDetailFragment       productDetailFragment;
+    ImageView                   imageView;
+    ProgressBar                 progressBar;
 
     public static Product currentProduct;
     @Override

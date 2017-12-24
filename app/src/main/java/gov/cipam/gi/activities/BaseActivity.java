@@ -16,11 +16,11 @@ import gov.cipam.gi.utils.Constants;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    String textSize;
-    boolean downloadImages;
-    Toolbar mToolbar;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.OnSharedPreferenceChangeListener prefListener;
+    String                                              textSize;
+    boolean                                             downloadImages;
+    Toolbar                                             mToolbar;
+    SharedPreferences                                   sharedPreferences;
+    SharedPreferences.OnSharedPreferenceChangeListener  prefListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

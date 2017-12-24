@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -22,11 +23,11 @@ import gov.cipam.gi.utils.Constants;
 
 public class NewUserActivity extends AppCompatActivity implements View.OnClickListener{
 
-    CircleImageView appLogoImage;
-    Button skipLoginButton,registerUserButton;
-    FirebaseAuth mAuth;
-    int width,height;
-    float scaledDensity,xdpi,ydpi,densityDpi;
+    CircleImageView     appLogoImage;
+    Button              skipLoginButton,registerUserButton;
+    FirebaseAuth        mAuth;
+    int                 width,height;
+    float               scaledDensity,xdpi,ydpi,densityDpi;
 
 
     @Override
@@ -37,7 +38,9 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         launchActivity();
         mAuth = FirebaseAuth.getInstance();
 
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
 
         DisplayMetrics metrics= Resources.getSystem().getDisplayMetrics();
         width= metrics.widthPixels;
@@ -94,6 +97,7 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.registerUser:
                 startActivity(new Intent(this,LoginActivity.class));
+                finish();
                 break;
         }
     }

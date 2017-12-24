@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:contentScrim="@color/colorPrimary"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+        <ProgressBar
+            android:id="@+id/progressBarDetails"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_parameter_larger"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            app:layout_collapseMode="none"
+            app:layout_collapseParallaxMultiplier="0.5" />
+
+        <include
+            android:id="@+id/product_toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
+    </android.support.design.widget.CollapsingToolbarLayout>
+</android.support.design.widget.CoordinatorLayout>

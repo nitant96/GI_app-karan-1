@@ -13,11 +13,11 @@ import gov.cipam.gi.fragments.SignInFragment;
 import gov.cipam.gi.fragments.SignUpFragment;
 
 public class LoginActivity extends BaseActivity {
-    SignInFragment signInFragment;
-    SignUpFragment signUpFragment;
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    LoginViewPagerAdapter loginViewPagerAdapter;
+    SignInFragment         signInFragment;
+    SignUpFragment         signUpFragment;
+    ViewPager              viewPager;
+    TabLayout              tabLayout;
+    LoginViewPagerAdapter  loginViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

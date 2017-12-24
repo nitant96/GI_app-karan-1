@@ -27,4 +27,5 @@
         android:layout_below="@+id/about_activity_image_view"
         android:text="@android:string/VideoView_error_text_invalid_progressive_playback"
         android:textAllCaps="true" />
+
 </RelativeLayout>

@@ -21,9 +21,9 @@ import gov.cipam.gi.model.Product;
 
 public class ProductListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-    private static final String LOG_TAG ="Ref   resh" ;
-    ProductListFragment productListFragment;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private static final String         LOG_TAG ="Refresh" ;
+    ProductListFragment                 productListFragment;
+    SwipeRefreshLayout                  swipeRefreshLayout;
 
     Database databaseInstance;
     SQLiteDatabase database;

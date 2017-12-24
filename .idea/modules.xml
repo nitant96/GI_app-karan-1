@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/GI_app-karan_update.iml" filepath="$PROJECT_DIR$/.idea/GI_app-karan_update.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GI_app-karan.iml" filepath="$PROJECT_DIR$/GI_app-karan.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -22,10 +22,10 @@ import gov.cipam.gi.R;
  * Created by karan on 11/20/2017.
  */
 
-public class Tab2Fragment extends Fragment implements OnMapReadyCallback{
+public class MapsFragment extends Fragment implements OnMapReadyCallback{
 
-    MapView mapView;
-    GoogleMap map;
+    MapView     mapView;
+    GoogleMap   map;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -20,7 +20,9 @@ import com.google.firebase.database.Query;
 
 import gov.cipam.gi.R;
 import gov.cipam.gi.activities.ProductDetailActivity;
+import gov.cipam.gi.activities.ProductListActivity;
 import gov.cipam.gi.adapters.ProductFirebaseAdapter;
+import gov.cipam.gi.adapters.ProductListAdapter;
 import gov.cipam.gi.manager.ListRetriever;
 import gov.cipam.gi.model.Product;
 import gov.cipam.gi.utils.DetailsTransition;
@@ -33,13 +35,14 @@ import gov.cipam.gi.viewholder.ProductViewHolder;
  * Created by karan on 12/14/2017.
  */
 
-public class ProductListFragment extends Fragment implements RecyclerViewClickListener,ListDataProgressListener {
+public class ProductListFragment extends Fragment implements RecyclerViewClickListener,ListDataProgressListener, ProductListAdapter.setOnProductClickedListener {
 
     RecyclerView productListRecycler;
     DatabaseReference mDatabaseProduct;
     ProductFirebaseAdapter productFirebaseAdapter;
     ProgressBar progressBar;
     FirebaseAuth mAuth;
+    ProductListAdapter productListAdapter;
 
     public ProductListFragment() {
     }
@@ -53,10 +56,10 @@ public class ProductListFragment extends Fragment implements RecyclerViewClickLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
-        ListRetriever listRetriever = new ListRetriever(this);
-        Query query = listRetriever.fetchAllData();
-        mDatabaseProduct = FirebaseDatabase.getInstance().getReference("Giproducts");
-        this.productFirebaseAdapter = new ProductFirebaseAdapter(getContext(), Product.class, R.layout.card_view_product_list, ProductViewHolder.class, query,listRetriever);
+//        ListRetriever listRetriever = new ListRetriever(this);
+//        Query query = listRetriever.fetchAllData();
+//        mDatabaseProduct = FirebaseDatabase.getInstance().getReference("Giproducts");
+//        this.productFirebaseAdapter = new ProductFirebaseAdapter(getContext(), Product.class, R.layout.card_view_product_list, ProductViewHolder.class, query,listRetriever);
         super.onCreate(savedInstanceState);
         //productListRecycler.addItemDecoration(new android.support.v7.widget.DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
@@ -66,10 +69,12 @@ public class ProductListFragment extends Fragment implements RecyclerViewClickLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         productListRecycler=view.findViewById(R.id.product_list_recycler_view);
+        productListAdapter=new ProductListAdapter(ProductListActivity.subGIList,getContext(),this);
         progressBar=view.findViewById(R.id.progressBar);
-        productListRecycler.setAdapter(productFirebaseAdapter);
+//        productListRecycler.setAdapter(productFirebaseAdapter);
+        productListRecycler.setAdapter(productListAdapter);
         productListRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        productListRecycler.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),productListRecycler,this));
+//        productListRecycler.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),productListRecycler,this));
     }
 
     @Override
@@ -98,5 +103,16 @@ public class ProductListFragment extends Fragment implements RecyclerViewClickLi
     @Override
     public void onListDataLoadingCancelled() {
         //progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onProductClicked(View view, int position) {
+        Product clickedProduct=ProductListActivity.subGIList.get(position);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("clickedProduct",clickedProduct);
+        Intent intent=new Intent(getContext(),ProductDetailActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
     }
 }

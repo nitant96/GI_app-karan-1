@@ -9,9 +9,11 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -19,13 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import gov.cipam.gi.R;
+import gov.cipam.gi.activities.HomePageActivity;
 import gov.cipam.gi.activities.ProductListActivity;
-import gov.cipam.gi.adapters.CategoryFirebaseAdapter;
-import gov.cipam.gi.adapters.StatesFirebaseAdapter;
+
+import gov.cipam.gi.adapters.CategoryAdapter;
+import gov.cipam.gi.adapters.StatesAdapter;
 import gov.cipam.gi.utils.RecyclerViewClickListener;
 import gov.cipam.gi.utils.RecyclerViewTouchListener;
-import gov.cipam.gi.viewholder.CategoryViewHolder;
-import gov.cipam.gi.viewholder.StateViewHolder;
 import gov.cipam.gi.adapters.ImageViewPageAdapter;
 import gov.cipam.gi.model.Categories;
 import gov.cipam.gi.model.States;
@@ -34,14 +36,16 @@ import gov.cipam.gi.model.States;
  * Created by karan on 11/20/2017.
  */
 
-public class HomePageFragment extends Fragment implements RecyclerViewClickListener {
+public class HomePageFragment extends Fragment implements RecyclerViewClickListener, CategoryAdapter.setOnCategoryClickListener, StatesAdapter.setOnStateClickedListener {
 
     RecyclerView rvState,rvCategory;
     ScrollView scrollView;
     AutoScrollViewPager autoScrollViewPager;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
-    StatesFirebaseAdapter statesFirebaseAdapter;
-    CategoryFirebaseAdapter categoryFirebaseAdapter;
+
+    public static StatesAdapter statesAdapter;
+    public static CategoryAdapter categoryAdapter;
+
     FirebaseAuth mAuth;
     DatabaseReference mDatabaseState,mDatabaseCategory;
 
@@ -57,8 +61,6 @@ public class HomePageFragment extends Fragment implements RecyclerViewClickListe
         mAuth = FirebaseAuth.getInstance();
         mDatabaseState = FirebaseDatabase.getInstance().getReference("States");
         mDatabaseCategory = FirebaseDatabase.getInstance().getReference("Categories");
-        statesFirebaseAdapter=new StatesFirebaseAdapter(getContext(),States.class,R.layout.card_view_state_item,StateViewHolder.class,mDatabaseState);
-        categoryFirebaseAdapter=new CategoryFirebaseAdapter(getContext(),Categories.class,R.layout.card_view_category_item,CategoryViewHolder.class,mDatabaseCategory);
 
     }
 
@@ -73,11 +75,15 @@ public class HomePageFragment extends Fragment implements RecyclerViewClickListe
         layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         layoutManager2 = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvState.setLayoutManager(layoutManager);
-        rvState.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvState,this));
-        rvState.setAdapter(statesFirebaseAdapter);
+//        rvState.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvState,this));
         rvCategory.setLayoutManager(layoutManager2);
-        //rvCategory.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvCategory,this));
-        rvCategory.setAdapter(categoryFirebaseAdapter);
+//        rvCategory.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(),rvCategory,this));
+
+        categoryAdapter=new CategoryAdapter(HomePageActivity.mDisplayCategoryList,getContext(),this);
+        statesAdapter=new StatesAdapter(this,HomePageActivity.mDisplayStateList,getContext());
+
+        rvState.setAdapter(statesAdapter);
+        rvCategory.setAdapter(categoryAdapter);
         setAutoScroll();
         super.onViewCreated(view, savedInstanceState);
     }
@@ -124,4 +130,19 @@ public class HomePageFragment extends Fragment implements RecyclerViewClickListe
 
     }
 
+    @Override
+    public void onCategoryClicked(View view, int position) {
+        Intent intent=new Intent(getContext(),ProductListActivity.class);
+        intent.putExtra("type","category");
+        intent.putExtra("value",HomePageActivity.mDisplayCategoryList.get(position).getName());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onStateClickedListener(View view, int position) {
+        Intent intent=new Intent(getContext(),ProductListActivity.class);
+        intent.putExtra("type","state");
+        intent.putExtra("value",HomePageActivity.mDisplayStateList.get(position).getName());
+        startActivity(intent);
+    }
 }

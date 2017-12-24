@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,10 +31,15 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 import gov.cipam.gi.R;
 import gov.cipam.gi.common.SharedPref;
+import gov.cipam.gi.database.Database;
 import gov.cipam.gi.fragments.HomePageFragment;
 import gov.cipam.gi.fragments.Tab2Fragment;
+import gov.cipam.gi.model.Categories;
+import gov.cipam.gi.model.States;
 import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
 import gov.cipam.gi.utils.NetworkChangeReceiver;
@@ -50,6 +57,12 @@ public class HomePageActivity extends BaseActivity
     Tab2Fragment tab2Fragment;
     FrameLayout frameLayout;
 
+    public static ArrayList<States> mDisplayStateList=new ArrayList<>();
+    public static ArrayList<Categories>  mDisplayCategoryList=new ArrayList<>();
+
+    Database databaseInstance;
+    SQLiteDatabase database;
+
     NetworkChangeReceiver networkChangeReceiver;
 
     @Override
@@ -58,6 +71,10 @@ public class HomePageActivity extends BaseActivity
         setContentView(R.layout.activity_home_page);
 
         setUpToolbar(this);
+        databaseInstance = new Database(this);
+        database = databaseInstance.getReadableDatabase();
+
+        populateDisplayListFromDB();
 
         showErrorSnackbar();
         homePageFragment =new HomePageFragment();
@@ -74,6 +91,8 @@ public class HomePageActivity extends BaseActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
+
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -83,6 +102,29 @@ public class HomePageActivity extends BaseActivity
         nav_email=hView.findViewById(R.id.nav_header_email);
         user = SharedPref.getSavedObjectFromPreference(HomePageActivity.this, Constants.KEY_USER_INFO,Constants.KEY_USER_DATA,Users.class);
         setUserName();
+    }
+
+    private void populateDisplayListFromDB() {
+        mDisplayStateList.clear();
+        mDisplayCategoryList.clear();
+
+        Cursor categoryCursor=database.query(Database.GI_CATEGORY_TABLE,null,null,null,null,null,null,null);
+        while(categoryCursor.moveToNext()){
+            String name=categoryCursor.getString(categoryCursor.getColumnIndex(Database.GI_CATEGORY_NAME));
+            String dpurl=categoryCursor.getString(categoryCursor.getColumnIndex(Database.GI_CATEGORY_DP_URL));
+
+            Categories oneCategory=new Categories(name,dpurl);
+            mDisplayCategoryList.add(oneCategory);
+        }
+
+        Cursor stateCursor=database.query(Database.GI_STATE_TABLE,null,null,null,null,null,null,null);
+        while(stateCursor.moveToNext()){
+            String name=stateCursor.getString(stateCursor.getColumnIndex(Database.GI_STATE_NAME));
+            String dpurl=stateCursor.getString(stateCursor.getColumnIndex(Database.GI_STATE_DP_URL));
+
+            States oneState=new States(name,dpurl);
+            mDisplayStateList.add(oneState);
+        }
     }
 
     @Override

@@ -25,6 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import gov.cipam.gi.R;
 import gov.cipam.gi.fragments.ProductDetailFragment;
+import gov.cipam.gi.model.Product;
 import gov.cipam.gi.utils.Constants;
 
 public class ProductDetailActivity extends BaseActivity {
@@ -33,20 +34,28 @@ public class ProductDetailActivity extends BaseActivity {
     ImageView imageView;
     ProgressBar progressBar;
 
+    public static Product currentProduct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         setUpToolbar(this);
 
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        currentProduct=(Product) bundle.getSerializable("clickedProduct");
+
         collapsingToolbarLayout=findViewById(R.id.collapsing_toolbar);
         progressBar=findViewById(R.id.progressBarDetails);
         collapsingToolbarLayout.setTitleEnabled(false);
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
-        mToolbar.setSubtitle(R.string.home);
+        mToolbar.setSubtitle(currentProduct.getName());
 
         imageView=findViewById(R.id.details_image);
         loadImage(imageView);
+
+
+
         productDetailFragment=new ProductDetailFragment();
         if(savedInstanceState==null){
             fragmentInflate(productDetailFragment);
@@ -81,7 +90,7 @@ public class ProductDetailActivity extends BaseActivity {
 
         if(image_download){
             Picasso.with(this)
-                    .load("http://i.imgur.com/DvpvklR.png")
+                    .load(currentProduct.getDpurl())
                     .fit()
                     .into(imageView, new Callback() {
                         @Override

@@ -1,23 +1,34 @@
 package gov.cipam.gi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by Deepak on 11/18/2017.
  */
 
-public class Product {
+public class Product implements Serializable {
 
     private String name,dpurl,detail,category,state;
+    @JsonIgnore
+    private String uid;
+
+    @JsonIgnore
+    private ArrayList<Seller> seller;
 
     public Product(){
 
     }
 
-    public void  GI(String name, String dpurl, String detail, String category, String state) {
+    public Product(String name, String dpurl, String detail, String category, String state,String uid) {
         this.name = name;
         this.dpurl = dpurl;
         this.detail = detail;
         this.category = category;
         this.state = state;
+        this.uid=uid;
     }
 
     public String getName() {
@@ -58,5 +69,21 @@ public class Product {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public ArrayList<Seller> getSeller() {
+        return seller;
+    }
+
+    public void setSeller(ArrayList<Seller> seller) {
+        this.seller = seller;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

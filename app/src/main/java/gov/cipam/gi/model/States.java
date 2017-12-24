@@ -1,11 +1,17 @@
 package gov.cipam.gi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+
 /**
  * Created by Deepak on 11/18/2017.
  */
 
 public class States  {
     private String name,dpurl;
+    @JsonIgnore
+    ArrayList<Product> stateProductList=new ArrayList<>();
 
     public States(){
 
@@ -30,5 +36,13 @@ public class States  {
 
     public void setDpurl(String dpurl) {
         this.dpurl = dpurl;
+    }
+
+    public ArrayList<Product> getStateProductList() {
+        return stateProductList;
+    }
+
+    public void setStateProductList(ArrayList<Product> stateProductList) {
+        this.stateProductList = stateProductList;
     }
 }

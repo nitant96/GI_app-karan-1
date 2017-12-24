@@ -99,15 +99,15 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
             String pattern = "((!)(@)(#)($)(%)(^)(&))";
             Pattern r = Pattern.compile(pattern);
             Matcher m = r.matcher(password);
-            if (m.find()) {
+//            if (m.matches()) {
                 mProgressDialog.show();
                 // register user to firebase authentication
                 // store name and email to firebase database
                 FirebaseAuthentication firebaseAuthentication=new FirebaseAuthentication(getContext());
                 firebaseAuthentication.startSignUp(email,password,name,mProgressDialog);
-            }else {
-                Toast.makeText(getContext(),"Password should contain at least one special character",Toast.LENGTH_LONG).show();
-            }
+//            }else {
+//                Toast.makeText(getContext(),"Password should contain at least one special character",Toast.LENGTH_LONG).show();
+//            }
 
         }
     }

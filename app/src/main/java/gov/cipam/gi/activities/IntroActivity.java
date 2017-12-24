@@ -2,6 +2,7 @@ package gov.cipam.gi.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,16 +14,19 @@ import com.github.paolorotolo.appintro.AppIntro;
 
 import gov.cipam.gi.R;
 import gov.cipam.gi.common.SharedPref;
+import gov.cipam.gi.database.Database;
 import gov.cipam.gi.fragments.Onboarding1;
 import gov.cipam.gi.fragments.Onboarding2;
 import gov.cipam.gi.model.Users;
 import gov.cipam.gi.utils.Constants;
+import gov.cipam.gi.utils.downloadThread;
 
 public class IntroActivity extends AppIntro {
-
+downloadThread downloadThread1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        downloadThread1=new downloadThread(this);
         addSlide(new Onboarding1());
         addSlide(new Onboarding2());
         setSpecs();

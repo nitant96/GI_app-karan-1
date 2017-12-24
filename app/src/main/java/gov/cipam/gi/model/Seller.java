@@ -1,5 +1,7 @@
 package gov.cipam.gi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -10,12 +12,14 @@ public class Seller implements Serializable {
 
     private String name,address,contact;
     private double lon,lat;
+    @JsonIgnore
+    private String uid;
 
     public Seller(){
 
     }
 
-    public void  GI(String name, String address, String contact, double lon, double lat) {
+    public Seller(String name, String address, String contact, double lon, double lat) {
         this.name = name;
         this.address = address;
         this.contact = contact;
@@ -61,5 +65,13 @@ public class Seller implements Serializable {
 
     public void setlat(double lat) {
         this.lat = lat;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

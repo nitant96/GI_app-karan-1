@@ -1,13 +1,17 @@
 package gov.cipam.gi.model;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 
 /**
  * Created by Deepak on 11/18/2017.
  */
 
-public class Categories implements Serializable {
+public class Categories {
     private String name,dpurl;
+    @JsonIgnore
+    ArrayList<Product> categoryProductList=new ArrayList<>();
 
     public Categories(){
 
@@ -32,5 +36,13 @@ public class Categories implements Serializable {
 
     public void setDpurl(String dpurl) {
         this.dpurl = dpurl;
+    }
+
+    public ArrayList<Product> getCategoryProductList() {
+        return categoryProductList;
+    }
+
+    public void setCategoryProductList(ArrayList<Product> categoryProductList) {
+        this.categoryProductList = categoryProductList;
     }
 }

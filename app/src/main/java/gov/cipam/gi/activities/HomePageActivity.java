@@ -37,7 +37,7 @@ import gov.cipam.gi.R;
 import gov.cipam.gi.common.SharedPref;
 import gov.cipam.gi.database.Database;
 import gov.cipam.gi.fragments.HomePageFragment;
-import gov.cipam.gi.fragments.Tab2Fragment;
+import gov.cipam.gi.fragments.MapsFragment;
 import gov.cipam.gi.model.Categories;
 import gov.cipam.gi.model.States;
 import gov.cipam.gi.model.Users;
@@ -54,7 +54,8 @@ public class HomePageActivity extends BaseActivity
     TextView nav_user,nav_email;
     HomePageFragment homePageFragment;
     SearchView searchView;
-    Tab2Fragment tab2Fragment;
+
+    MapsFragment tab2Fragment;
     FrameLayout frameLayout;
 
     public static ArrayList<States> mDisplayStateList=new ArrayList<>();
@@ -78,7 +79,7 @@ public class HomePageActivity extends BaseActivity
 
         showErrorSnackbar();
         homePageFragment =new HomePageFragment();
-        tab2Fragment =new Tab2Fragment();
+        tab2Fragment =new MapsFragment();
 
         if(savedInstanceState==null){
             fragmentInflate(homePageFragment);
@@ -167,8 +168,8 @@ public class HomePageActivity extends BaseActivity
                 break;
             case R.id.action_search:
                 break;
-            case R.id.action_open_settings:
-                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+//            case R.id.action_open_settings:
+//                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -182,9 +183,9 @@ public class HomePageActivity extends BaseActivity
                 case R.id.navigation_home:
                     fragmentInflate(homePageFragment);
                     return true;
-                case R.id.navigation_dashboard:
-                    fragmentInflate(tab2Fragment);
-                    return true;
+//                case R.id.navigation_dashboard:
+//                    fragmentInflate(tab2Fragment);
+//                    return true;
             }
             return false;
         }
@@ -328,7 +329,7 @@ public class HomePageActivity extends BaseActivity
                             (int) (params.bottomMargin + getResources().getDimension(R.dimen.snackbar_margin)));
 
                     snackBarView.setLayoutParams(params);
-                    snackBarView.setElevation(0);
+//                    snackBarView.setElevation(0);
 
                     snackbar.show();
                 }

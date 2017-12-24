@@ -17,6 +17,11 @@ public class Categories {
 
     }
 
+    public Categories(String name, String dpurl) {
+        this.name = name;
+        this.dpurl = dpurl;
+    }
+
     public String getName() {
         return name;
     }
